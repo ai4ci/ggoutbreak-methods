@@ -1,0 +1,85 @@
+\begin{thebibliography}{1}
+
+\bibitem{anderson1996}
+Jeffrey~L. Anderson.
+\newblock A {{Method}} for {{Producing}} and {{Evaluating Probabilistic
+  Forecasts}} from {{Ensemble Model Integrations}}.
+\newblock 9(7):1518--1530.
+\newblock URL:
+  \url{https://journals.ametsoc.org/view/journals/clim/9/7/1520-0442_1996_009_1518_amfpae_2_0_co_2.xml},
+  \href {https://doi.org/10.1175/1520-0442(1996)009<1518:AMFPAE>2.0.CO;2}
+  {\path{doi:10.1175/1520-0442(1996)009<1518:AMFPAE>2.0.CO;2}}.
+
+\bibitem{bosse2024}
+Nikos~I. Bosse, Hugo Gruson, Anne Cori, prefix=van~useprefix=false
+  family=Leeuwen, given=Edwin, Sebastian Funk, and Sam Abbott.
+\newblock Evaluating {{Forecasts}} with scoringutils in {{R}}.
+\newblock URL: \url{http://arxiv.org/abs/2205.07090}, \href
+  {http://arxiv.org/abs/2205.07090} {\path{arXiv:2205.07090}}, \href
+  {https://doi.org/10.48550/arXiv.2205.07090}
+  {\path{doi:10.48550/arXiv.2205.07090}}.
+
+\bibitem{bosse2023}
+Nikos~I. Bosse, Sam Abbott, Anne Cori, prefix=van~useprefix=false
+  family=Leeuwen, given=Edwin, Johannes Bracher, and Sebastian Funk.
+\newblock Scoring epidemiological forecasts on transformed scales.
+\newblock 19(8):e1011393.
+\newblock URL:
+  \url{https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011393},
+  \href {https://doi.org/10.1371/journal.pcbi.1011393}
+  {\path{doi:10.1371/journal.pcbi.1011393}}.
+
+\bibitem{brocker2008}
+J.~Bröcker.
+\newblock On reliability analysis of multi-categorical forecasts.
+\newblock 15(4):661--673.
+\newblock URL: \url{https://npg.copernicus.org/articles/15/661/2008/}, \href
+  {https://doi.org/10.5194/npg-15-661-2008}
+  {\path{doi:10.5194/npg-15-661-2008}}.
+
+\bibitem{gneiting2007}
+Tilmann Gneiting and Adrian~E Raftery.
+\newblock Strictly {{Proper Scoring Rules}}, {{Prediction}}, and
+  {{Estimation}}.
+\newblock 102(477):359--378.
+\newblock \href {https://doi.org/10.1198/016214506000001437}
+  {\path{doi:10.1198/016214506000001437}}.
+
+\bibitem{david1948}
+F.~N. David and N.~L. Johnson.
+\newblock The {{Probability Integral Transformation When Parameters}} are
+  {{Estimated}} from the {{Sample}}.
+\newblock 35(1/2):182--190.
+\newblock URL: \url{https://www.jstor.org/stable/2332638}, \href
+  {http://arxiv.org/abs/2332638} {\path{arXiv:2332638}}, \href
+  {https://doi.org/10.2307/2332638} {\path{doi:10.2307/2332638}}.
+
+\bibitem{brockwell2007}
+A.~E. Brockwell.
+\newblock Universal residuals: {{A}} multivariate transformation.
+\newblock 77(14):1473--1478.
+\newblock URL:
+  \url{https://www.sciencedirect.com/science/article/pii/S0167715207000715},
+  \href {https://doi.org/10.1016/j.spl.2007.02.008}
+  {\path{doi:10.1016/j.spl.2007.02.008}}.
+
+\bibitem{hamill2001}
+Thomas~M. Hamill.
+\newblock Interpretation of {{Rank Histograms}} for {{Verifying Ensemble
+  Forecasts}}.
+\newblock 129(3):550--560.
+\newblock URL:
+  \url{https://journals.ametsoc.org/view/journals/mwre/129/3/1520-0493_2001_129_0550_iorhfv_2.0.co_2.xml},
+  \href {https://doi.org/10.1175/1520-0493(2001)129<0550:IORHFV>2.0.CO;2}
+  {\path{doi:10.1175/1520-0493(2001)129<0550:IORHFV>2.0.CO;2}}.
+
+\bibitem{panaretos2019}
+Victor~M. Panaretos and Yoav Zemel.
+\newblock Statistical {{Aspects}} of {{Wasserstein Distances}}.
+\newblock 6:405--431.
+\newblock URL:
+  \url{https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-030718-104938},
+  \href {https://doi.org/10.1146/annurev-statistics-030718-104938}
+  {\path{doi:10.1146/annurev-statistics-030718-104938}}.
+
+\end{thebibliography}

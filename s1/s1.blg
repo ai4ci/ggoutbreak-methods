@@ -1,0 +1,60 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: s1.aux
+The style file: unsrturl.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: ../main/refs.bib
+Warning--empty journal in gostic2020
+Warning--empty year in gostic2020
+Too many commas in name 3 of "Thompson, R. N. and Stockwin, J. E. and family=Gaalen, given=R. D., prefix=van, useprefix=true and Polonsky, J. A. and Kamvar, Z. N. and Demarsh, P. A. and Dahlqwist, E. and Li, S. and Miguel, E. and Jombart, T. and Lessler, J. and Cauchemez, S. and Cori, A." for entry thompson2019
+while executing---line 1311 of file unsrturl.bst
+Warning--empty journal in thompson2019
+Warning--empty year in thompson2019
+Warning--empty journal in parag2021
+Warning--empty year in parag2021
+You've used 3 entries,
+            2555 wiz_defined-function locations,
+            594 strings with 6012 characters,
+and the built_in function-call counts, 1637 in all, are:
+= -- 114
+> -- 128
+< -- 0
++ -- 42
+- -- 39
+* -- 161
+:= -- 269
+add.period$ -- 12
+call.type$ -- 3
+change.case$ -- 3
+chr.to.int$ -- 0
+cite$ -- 9
+duplicate$ -- 33
+empty$ -- 136
+format.name$ -- 39
+if$ -- 387
+int.to.chr$ -- 0
+int.to.str$ -- 3
+missing$ -- 3
+newline$ -- 21
+num.names$ -- 3
+pop$ -- 27
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 78
+stack$ -- 0
+substring$ -- 66
+swap$ -- 6
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 6
+while$ -- 6
+width$ -- 4
+write$ -- 38
+(There was 1 error message)

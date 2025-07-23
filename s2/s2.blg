@@ -1,0 +1,74 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: s2.aux
+The style file: unsrturl.bst
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: ../main/refs.bib
+Warning--entry type for "bosse2024" isn't style-file defined
+--line 85 of file ../main/refs.bib
+Warning--empty journal in anderson1996
+Warning--empty year in anderson1996
+Too many commas in name 4 of "Bosse, Nikos I. and Gruson, Hugo and Cori, Anne and family=Leeuwen, given=Edwin, prefix=van, useprefix=false and Funk, Sebastian and Abbott, Sam" for entry bosse2024
+while executing---line 1311 of file unsrturl.bst
+Too many commas in name 4 of "Bosse, Nikos I. and Abbott, Sam and Cori, Anne and family=Leeuwen, given=Edwin, prefix=van, useprefix=false and Bracher, Johannes and Funk, Sebastian" for entry bosse2023
+while executing---line 1311 of file unsrturl.bst
+Warning--empty journal in bosse2023
+Warning--empty year in bosse2023
+Warning--empty journal in brocker2008
+Warning--empty year in brocker2008
+Warning--empty journal in gneiting2007
+Warning--empty year in gneiting2007
+Warning--empty journal in david1948
+Warning--empty year in david1948
+Warning--empty journal in brockwell2007
+Warning--empty year in brockwell2007
+Warning--empty journal in hamill2001
+Warning--empty year in hamill2001
+Warning--empty journal in panaretos2019
+Warning--empty year in panaretos2019
+You've used 9 entries,
+            2555 wiz_defined-function locations,
+            645 strings with 6847 characters,
+and the built_in function-call counts, 3610 in all, are:
+= -- 361
+> -- 97
+< -- 0
++ -- 31
+- -- 22
+* -- 292
+:= -- 454
+add.period$ -- 35
+call.type$ -- 9
+change.case$ -- 9
+chr.to.int$ -- 0
+cite$ -- 25
+duplicate$ -- 93
+empty$ -- 401
+format.name$ -- 22
+if$ -- 965
+int.to.chr$ -- 0
+int.to.str$ -- 9
+missing$ -- 8
+newline$ -- 56
+num.names$ -- 9
+pop$ -- 80
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 238
+stack$ -- 0
+substring$ -- 211
+swap$ -- 23
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 16
+while$ -- 24
+width$ -- 10
+write$ -- 109
+(There were 2 error messages)

@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+
+\bibitem{gostic2020}
+Katelyn~M. Gostic, Lauren McGough, Edward~B. Baskerville, Sam Abbott, Keya
+  Joshi, Christine Tedijanto, Rebecca Kahn, Rene Niehus, James~A. Hay, Pablo
+  M.~De Salazar, Joel Hellewell, Sophie Meakin, James~D. Munday, Nikos~I.
+  Bosse, Katharine Sherrat, Robin~N. Thompson, Laura~F. White, Jana~S. Huisman,
+  Jérémie Scire, Sebastian Bonhoeffer, Tanja Stadler, Jacco Wallinga,
+  Sebastian Funk, Marc Lipsitch, and Sarah Cobey.
+\newblock Practical considerations for measuring the effective reproductive
+  number, {{Rt}}.
+\newblock 16(12):e1008409.
+\newblock URL:
+  \url{https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008409},
+  \href {https://doi.org/10.1371/journal.pcbi.1008409}
+  {\path{doi:10.1371/journal.pcbi.1008409}}.
+
+\bibitem{thompson2019}
+R.~N. Thompson, J.~E. Stockwin, prefix=van~useprefix=true family=Gaalen,
+  given=R.~D., J.~A. Polonsky, Z.~N. Kamvar, P.~A. Demarsh, E.~Dahlqwist,
+  S.~Li, E.~Miguel, T.~Jombart, J.~Lessler, S.~Cauchemez, and A.~Cori.
+\newblock Improved inference of time-varying reproduction numbers during
+  infectious disease outbreaks.
+\newblock 29:100356.
+\newblock URL:
+  \url{https://www.sciencedirect.com/science/article/pii/S1755436519300350},
+  \href {https://doi.org/10.1016/j.epidem.2019.100356}
+  {\path{doi:10.1016/j.epidem.2019.100356}}.
+
+\bibitem{parag2021}
+Kris~V. Parag.
+\newblock Improved estimation of time-varying reproduction numbers at low case
+  incidence and between epidemic waves.
+\newblock 17(9):e1009347.
+\newblock URL:
+  \url{https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009347},
+  \href {https://doi.org/10.1371/journal.pcbi.1009347}
+  {\path{doi:10.1371/journal.pcbi.1009347}}.
+
+\end{thebibliography}

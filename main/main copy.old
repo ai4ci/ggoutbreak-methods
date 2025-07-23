@@ -1,0 +1,478 @@
+% test
+% Template for PLoS
+% Version 3.5 March 2018
+%
+% % % % % % % % % % % % % % % % % % % % % %
+%
+% -- IMPORTANT NOTE
+%
+% This template contains comments intended
+% to minimize problems and delays during our production
+% process. Please follow the template instructions
+% whenever possible.
+%
+% % % % % % % % % % % % % % % % % % % % % % %
+%
+% Once your paper is accepted for publication,
+% PLEASE REMOVE ALL TRACKED CHANGES in this file
+% and leave only the final text of your manuscript.
+% PLOS recommends the use of latexdiff to track changes during review, as this will help to maintain a clean tex file.
+% Visit https://www.ctan.org/pkg/latexdiff?lang=en for info or contact us at latex@plos.org.
+%
+%
+% There are no restrictions on package use within the LaTeX files except that
+% no packages listed in the template may be deleted.
+%
+% Please do not include colors or graphics in the text.
+%
+% The manuscript LaTeX source should be contained within a single file (do not use \input, \externaldocument, or similar commands).
+%
+% % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- FIGURES AND TABLES
+%
+% Please include tables/figure captions directly after the paragraph where they are first cited in the text.
+%
+% DO NOT INCLUDE GRAPHICS IN YOUR MANUSCRIPT
+% - Figures should be uploaded separately from your manuscript file.
+% - Figures generated using LaTeX should be extracted and removed from the PDF before submission.
+% - Figures containing multiple panels/subfigures must be combined into one image file before submission.
+% For figure citations, please use "Fig" instead of "Figure".
+% See http://journals.plos.org/plosone/s/figures for PLOS figure guidelines.
+%
+% Tables should be cell-based and may not contain:
+% - spacing/line breaks within cells to alter layout or alignment
+% - do not nest tabular environments (no tabular environments within tabular environments)
+% - no graphics or colored text (cell background color/shading OK)
+% See http://journals.plos.org/plosone/s/tables for table guidelines.
+%
+% For tables that exceed the width of the text column, use the adjustwidth environment as illustrated in the example table in text below.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+%
+% -- EQUATIONS, MATH SYMBOLS, SUBSCRIPTS, AND SUPERSCRIPTS
+%
+% IMPORTANT
+% Below are a few tips to help format your equations and other special characters according to our specifications. For more tips to help reduce the possibility of formatting errors during conversion, please see our LaTeX guidelines at http://journals.plos.org/plosone/s/latex
+%
+% For inline equations, please be sure to include all portions of an equation in the math environment.  For example, x$^2$ is incorrect; this should be formatted as $x^2$ (or $\mathrm{x}^2$ if the romanized font is desired).
+%
+% Do not include text that is not math in the math environment. For example, CO2 should be written as CO\textsubscript{2} instead of CO$_2$.
+%
+% Please add line breaks to long display equations when possible in order to fit size of the column.
+%
+% For inline equations, please do not include punctuation (commas, etc) within the math environment unless this is part of the equation.
+%
+% When adding superscript or subscripts outside of brackets/braces, please group using {}.  For example, change "[U(D,E,\gamma)]^2" to "{[U(D,E,\gamma)]}^2".
+%
+% Do not use \cal for caligraphic font.  Instead, use \mathcal{}
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+%
+% Please contact latex@plos.org with any questions.
+%
+% % % % % % % % % % % % % % % % % % % % % % % %
+
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
+
+% amsmath and amssymb packages, useful for mathematical formulas and symbols
+\usepackage{amsmath,amssymb}
+
+% Use adjustwidth environment to exceed column width (see example table in text)
+\usepackage{changepage}
+
+% Use Unicode characters when possible
+\usepackage[utf8x]{inputenc}
+
+% textcomp package and marvosym package for additional characters
+\usepackage{textcomp,marvosym}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+% Use nameref to cite supporting information files (see Supporting Information section for more info)
+\usepackage{nameref,hyperref}
+
+% line numbers
+\usepackage[right]{lineno}
+
+% ligatures disabled
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+
+% color can be used to apply background shading to table cells only
+\usepackage[table]{xcolor}
+
+% array package and thick rules for tables
+\usepackage{array}
+
+% create "+" rule type for thick vertical lines
+\newcolumntype{+}{!{\vrule width 2pt}}
+
+% create \thickcline for thick horizontal lines of variable length
+\newlength\savedwidth
+\newcommand\thickcline[1]{%
+  \noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+  \cline{#1}%
+  \noalign{\vskip\arrayrulewidth}%
+  \noalign{\global\arrayrulewidth\savedwidth}%
+}
+
+% \thickhline command for thick horizontal lines that span the table
+\newcommand\thickhline{\noalign{\global\savedwidth\arrayrulewidth\global\arrayrulewidth 2pt}%
+\hline
+\noalign{\global\arrayrulewidth\savedwidth}}
+
+
+% Remove comment for double spacing
+%\usepackage{setspace}
+%\doublespacing
+
+% Text layout
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in
+\textheight 8.75in
+
+% Bold the 'Figure #' in the caption and separate it from the title/caption with a period
+% Captions will be left justified
+\usepackage[aboveskip=1pt,labelfont=bf,labelsep=period,justification=raggedright,singlelinecheck=off]{caption}
+\renewcommand{\figurename}{Fig}
+
+% Use the PLoS provided BiBTeX style
+\bibliographystyle{plos2015}
+
+% Remove brackets from numbering in List of References
+\makeatletter
+\renewcommand{\@biblabel}[1]{\quad#1.}
+\makeatother
+
+
+
+% Header and Footer with logo
+\usepackage{lastpage,fancyhdr,graphicx}
+\usepackage{epstopdf}
+%\pagestyle{myheadings}
+\pagestyle{fancy}
+\fancyhf{}
+%\setlength{\headheight}{27.023pt}
+%\lhead{\includegraphics[width=2.0in]{PLOS-submission.eps}}
+\rfoot{\thepage/\pageref{LastPage}}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrule}{\hrule height 2pt \vspace{2mm}}
+\fancyheadoffset[L]{2.25in}
+\fancyfootoffset[L]{2.25in}
+\lfoot{\today}
+
+%% Include all macros below
+
+\newcommand{\lorem}{{\bf LOREM}}
+\newcommand{\ipsum}{{\bf IPSUM}}
+
+%% END MACROS SECTION
+
+
+\begin{document}
+\vspace*{0.2in}
+
+% Title must be 250 characters or less.
+\begin{flushleft}
+{\Large
+\textbf\newline{Instantaneous Reproduction Number Estimation From Modelled Incidence}
+}
+\newline
+% Insert author names, affiliations and corresponding author email (do not include titles, positions, or degrees).
+\\
+Robert Challen\textsuperscript{1,2*},
+Leon Danon\textsuperscript{1,2}
+\\
+\bigskip
+\textbf{1} AI4CI, University of Bristol, Bristol, UK.\\
+\textbf{2} Department of Engineering Mathematics, University of Bristol, Bristol, UK.\\
+\bigskip
+
+% Insert additional author notes using the symbols described below. Insert symbol callouts after author names as necessary.
+% Use the asterisk to denote corresponding authorship and provide email address in note below.
+* rob.challen@bristol.ac.uk
+
+\end{flushleft}
+% Please keep the abstract below 300 words
+\section*{Abstract}
+
+TODO check 2
+
+% Please keep the Author Summary between 150 and 200 words
+% Use first person. PLOS ONE authors please skip this step.
+% Author Summary not valid for PLOS ONE submissions.
+
+\section*{Author summary}
+
+TODO \cite{ramanan2017}
+
+\linenumbers
+
+% Use "Eq" instead of "Equation" for equation citations.
+\section*{Introduction}
+
+Estimating the time varying reproduction number ($R_t$) is an important part of monitoring the progression of an epidemic, it informs short term projections of the epidemic size and hence guides decisions on policy interventions targetting behaviour. $R_t$ estimation may be done using a range of techniques with varying degrees of sophistication, but the majority are based on a time series of count data reflecting the incidence of infection in the population. Such count data may be new infections, hospitalisations or deaths, and are well known to exhibit specific biases due to incomplete ascertainment, reporting delay, and right truncation, along with more generic data quality issues such as missing values or anomalous values.
+
+When correcting for such issues, one approach is to use count data to estimate incidence of a disease ($I_t$) using a model based around a time varying poisson rate, and fitted using maximum likelihood, using a logarithmic link function. In this common situation the estimate of the poisson rate at any given time point ($t$) is a log-normally distributed quantity defined by parameters $\mu_t$ and $\sigma_t$, which reflect the uncertainty in the data.
+
+It is appealing to use such a modelled incidence estimate to calculate an estimate of the reproduction number, $R_t$. Incidence models can be derived in a number of ways, they are easily inspected for error and can be made tolerant of missing values and outliers.
+
+This paper presents a mathematical approach to estimating the instantaneous reproduction number from modelled incidence data, which propagates incidence model uncertainty into estimates of the reproduction number. We validate this method against a simulation based on a branching process model with parameterised reproduction number and qualitatively compare the output to a reproduction number estimate using the Cori method implemented in the R package EpiEstim.
+
+Supporting implementations of all methods described here are provided in the associated R package ``ggoutbreak'' (\url{https://ai4ci.github.io/ggoutbreak/}).
+
+\section*{Materials and methods}
+
+
+\subsection*{Mathematical analysis}
+
+To use a modelled estimate of incidence to predict $R_t$ we
+need to propagate uncertainty in incidence into our $R_t$ estimates. To
+calculate $R_t$ we can use the backwards-looking renewal equations which
+incorporate the infectivity profile of the disease ($\omega$) at a number of
+days after infection ($\tau$):
+
+\begin{eqnarray}
+I_t \sim Poisson(\Lambda_t) \\
+\Lambda_t \sim Lognormal(\mu_t,\sigma_t) \\
+R_t = \frac{I_t}{\sum_{\tau}{\omega_{\tau}I_{t-\tau}}}
+\end{eqnarray}
+
+giving us:
+
+\begin{eqnarray}
+R_t \sim \frac{\Lambda_t}{\sum_{\tau}{\omega_{\tau}\Lambda_{t-\tau}}} \\
+R_t \sim \frac{Lognormal(\mu_t,\sigma_t)}{\sum_{\tau}{
+  Lognormal( \mu_{t-\tau} + log(\omega_{\tau}) , \sigma_{t-\tau})
+}} \\
+\end{eqnarray}
+
+
+As an aside, it has been shown that the sum of log-normal distributions can be approximated by another log-normal (Lo 2013) with parameters $\mu_Z$ and $\sigma_Z$.
+
+\begin{eqnarray}
+\begin{aligned}
+	S_+ &= \operatorname{E}\left[\sum_i X_i \right] = \sum_i
+	\operatorname{E}[X_i] =
+	\sum_i e^{\mu_i + \frac{1}{2}\sigma_i^2}
+	\\
+	\sigma^2_{Z} &= \frac{1}{S_+^2} \, \sum_{i,j}
+	  \operatorname{cor}_{ij} \sigma_i \sigma_j \operatorname{E}[X_i] \operatorname{E}[X_j] =
+	  \frac{1}{S_+^2} \, \sum_{i,j}
+	  \operatorname{cor}_{ij} \sigma_i \sigma_j e^{\mu_i+\frac{1}{2}\sigma_i^2}
+	  e^{\mu_j+\frac{1}{2}\sigma_j^2}
+	\\
+	\mu_Z &= \ln\left( S_+ \right) - \frac{1}{2}\sigma_{Z}^2
+\end{aligned}
+\end{eqnarray}
+
+The sum term in the denominator of the renewal equation consists of a set of
+correlated scaled log normal distributions with both scale and correlation
+defined by the infectivity profile ($\omega$). In our case $cor_{ij}$ can be
+equated to the infectivity profile ($\omega_{|i-j|}$) when $i \neq j$ and 1 when
+$i = j$. $\mu_i$ is $\mu_{t-\tau} + ln(\omega_{\tau})$.
+
+
+\begin{eqnarray}
+\begin{aligned}
+	S_{t} &= \sum_{s=1}^{|\omega|} { \omega_s e^{\mu_{t-s} + \frac{1}{2}\sigma_{t-s}^2 }} \\
+	\sigma_{Z,t} &= \sqrt{
+	  \frac{
+	    \sum_{i,j=1}^{|\omega|} {
+  	    (\omega_{|i-j|}+I(i,j)) \omega_i \omega_j (\sigma_{(t-i)} e^{\mu_{(t-i)}+\frac{1}{2}\sigma_{(t-i)}^2}) (\sigma_{(t-j)} e^{\mu_{(t-j)}+\frac{1}{2}\sigma_{(t-j)}^2})
+	    }
+	  }{S_{t}^2}
+	}	\\
+	\mu_{Z,t} &= \log\left( S_{t} \right) - \frac{1}{2}\sigma_{Z,t}^2
+\end{aligned}
+\end{eqnarray}
+
+$\mu$ is the central estimate of case counts on the log scale, and its standard
+deviation can also be large. There are numerical stability issues dealing
+with terms involving $e^{(\mu+\sigma^2)}$, however keeping everything in log space and
+using optimised log-sum-exp functions this can be made computationally tractable.
+
+\begin{eqnarray}
+\begin{aligned}
+	\log(S_{t}) &= \log(\sum_{s=1}^{|\omega|} {  e^{\mu_{t-s} + \frac{1}{2}\sigma_{t-s}^2 + \log(\omega_s) }}) \\
+	\log(T_{t,\tau}) &= \log(\omega_{\tau}) + \log(\sigma_{(t-{\tau})}) + \mu_{(t-{\tau})} + \frac{1}{2}\sigma_{(t-{\tau})}^2) \\
+	\log(cor_{i,j}) &= \log(\omega_{|i-j|}+I(i=j)) \\
+	\log(\sigma_{Z,t}^2) &= \log(
+	    \sum_{i,j=1}^{|\omega|} {
+  	      e^{
+  	        \log(cor_{i,j}) + \log(T_{t,i}) + \log(T_{t,j})
+  	      }
+	    }) - 2 \log(S_{t}) \\
+	\mu_{Z,t} &= \log( S_{t} ) - \frac{1}{2}\sigma_{Z,t}^2
+\end{aligned}
+\end{eqnarray}
+
+N.B. if we assume the individual estimates of the incidence are uncorrelated this
+simplifies to:
+
+\begin{eqnarray}
+\begin{aligned}
+\log(\sigma_{Z,t}^2) &= \log(
+	    \sum_{\tau=1}^{|\omega|} {
+  	      e^{
+  	        2 \log(T_{t,\tau})
+  	      }
+	    }) - 2 \log(S_{t})
+\end{aligned}
+\end{eqnarray}
+
+Empirically there is not a huge amount of difference in estimates between these
+two forms. If the infectivity profile $\omega$ is spread out over a large period
+then the correlation matrix will be $O(\omega)^2$ which may predicate this simpler
+order 1 formulation.
+
+With $\mu_{Z,t}$ and $\sigma_{Z,t}$ we are left with the final derivation of
+$R_t$, giving us a distributional form of $R_t$ incorporating uncertainty from
+modelled incidence estimates:
+
+\begin{eqnarray}
+\label{eq:final}
+\begin{aligned}
+R_t &= \frac{Lognormal(\mu_t,\sigma_t)}
+{Lognormal( \mu_{Z,t}, \sigma_{Z,t})} \\
+\mu_{R_t} &= \mu_t - \mu_{Z,t} \\
+\sigma_{R_t} &= \sqrt{\sigma_t^2+\sigma_{z,t}^2} \\
+R_t &= Lognormal(\mu_{R_t}, \sigma_{R_t})
+\end{aligned}
+\end{eqnarray}
+
+This is conditioned on a single known infectivity profile. In reality there is
+also uncertainty in the infectivity profile, however we cannot assume any
+particular distributional form for this. We can use a range of empirical
+estimates of the infectivity profile to calculate multiple distributional
+estimates for $R_t$ and then combine these as a mixture distribution.
+
+There is not much we can assume about this mixture distribution, as it will depend on the
+nature of the various empirical infectivity profile distributions. However, we can
+use general properties of mixture distributions to generate estimates for the
+mean and variance of the reproduction number estimate including uncertaininty
+arising from multiple infection profile estimates and from the incidence
+estimate models ($R_t^*$):
+
+$$
+\begin{align}
+E[R_t|\omega] &= e^{(\mu_{R_t,\omega} - \frac{1}{2}\sigma_{R_t,\omega}^2)} \\
+V[R_t|\omega] &= \big[
+  e^{(\sigma_{R_t,\omega}^2)} - 1
+\big] \big[
+  e^{2 \mu_{R_t,\omega} + \sigma_{R_t,\omega}^2}
+\big] \\
+E[R_t^*] &= \frac{1}{|\Omega|}\sum_{\omega \in \Omega} E[{R_t|\omega}] \\
+V[R_t^*] &= \frac{1}{|\Omega|} \bigg(\sum_{\omega \in \Omega}{V[R_t|\omega]+E[R_t|\omega]^2}\bigg) - E[R_t^*]^2 \\
+\end{align}
+$$
+
+The cumulative distribution function of the mixture is simply the arithmetic mean of the
+component cumulative distribution functions (conditioned on each infectivity profile). If
+$\Phi$ is the cumulative distribution function of the standard normal distribution:
+
+
+$$
+\begin{align}
+F_{R_t^*}(x) &= \frac{1}{|\Omega|}\sum_{\omega \in \Omega}F_{R_t}(x|\omega) \\
+P(R_t^* \le x) &= \frac{1}{|\Omega|}\sum_{\omega \in \Omega} P(R_{t,\omega} \le x) \\
+P(R_t^* \le x) &= \frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(x) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg)
+\end{align}
+$$
+
+As the cumulative density function of this mixture distribution is a strictly
+increasing function, specific solutions for median ($q_{0.5}$) and 95\% confidence intervals
+($q_{0.025}$ and $q_{0.975}$) can be calculated numerically by solving the following equations:
+
+$$
+\begin{align}
+\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(q_{0.025}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.025 &= 0 \\
+\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(q_{0.5}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.5 &= 0 \\
+\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(q_{0.975}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.975 &= 0
+\end{align}
+$$
+
+In summary we present a method for retrieving the distributional form of the reproduction number from estimates of incidence arising from simple statistical count models, and including uncertainty arising from both count models and from infectivity profile distributions. This is fully deterministic and computationally inexpensive.
+
+\subsection*{Validation}
+
+To test this method we developed a simulation based on a branching process model parametrised by $R_t$, imported infections, and infectivity profile. Taken together, $R_t$ and the infectivity profile define the expected number of secondary infections given a primary infection, on each day post infection. This expectation is sampled using a Poisson distribution to realise simulated infections on each day. On average the degree of outward edges in the network of realised infections at any given time is a sample from the parametrised $R_t$ which we regard as the ground truth. This simulation generates a line list of synthetic infections, using various $R_t$ time series, but keeping infection importation, and infectivity profile constant. The line list of infected individuals were aggregated to daily counts of infection.
+
+To assess the effect of random noise in the input data we assume that infections are subject to varying degrees of ascertainment which change from day to day. This daily rate of ascertainment is modelled as a Beta distributed quantity with a fixed mean, but variable standard deviation, ranging from low values representing homogenous day to day ascertainment, to high values with large day to day variation. Various ascertainment scenarios were applied to the same underlying infection time series, with observed counts being a binomial sample from the infection counts for a given day, with the daily varying probability of ascertainment. In this way all the simulations have the same underlying parametrisation, and only vary by the degree of statistical noise, which is proportional to the size of the infection count at any given time point.
+
+ The resulting observed infection counts were used directly as an input to EpiEstim to generate a baseline $R_t$ estimate as a comparator. The synthetic infections are also used as input to estimate the underlying infection rate, using a simple statistical Poisson model with time varying rate parameter, represented by a piecewise polynomial, and fitted using maximum likelihood with a logarithmic link function according to the methods of Loader et al. The central estimate and the standard error of the fitted Poisson rate were then also used as inputs to the $R_t$ estimation method described in this paper. The posterior distributions of $R_t$ estimates from both modelled incidence method and from EpiEstim, were compared to simulation ground truth using the continuous ranked probability score (CRPS) and the quantile bias, in the presence of increasing ascertainment noise. All simulations were repeated multiple times for each parametrised $R_t$ time series to identify if the performance of the two estimation frameworks was statistically different. We also collect and compare processing time for the two estimation frameworks (including incidence model fitting). In a sensitivity analysis we examined the effect on accuracy metrics of correcting for lag in EpiEstim estimates.
+
+As a final part of the validation we took the simulated individuals and applied a probability that the individual experienced symptoms, accoring to a Bernouilli distribution. For those who experienced symptoms, we applied a time delay representing a time from infection to onset of symptoms, defined by a Gamma distribution. From the first 1000 infector-infectee pairs who both experienced symptoms we calculated a serial interval, which we used to estimate an empirical serial interval distribution. We then counted the symptomatic individuals for each day of symptom onset, to get a daily symptomatic case count. From symptomatic case counts we use the same Poisson model with time varying rate as above, to derive a model of incidence of symptomatic cases rather than infections. We then test the methods described in this paper with symptomatic case counts and serial interval distribution to derive an estimate of $R_t$, which we compared to the parametrised input to the simulation, using CRPS and quantile bias as before.
+
+% $$
+% \begin{align}
+% \frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(R_{t,sim}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg)
+% \end{align}
+% $$
+
+% Results and Discussion can be combined.
+\section*{Results}
+
+Testing this against the incidence model shown above, and comparing the results
+to the SPI-M-O consensus $R_t$ estimates gives us the following time-series for
+England. This has not been formally evaluated but qualitatively is a good fit. This
+single time series with 1410 time points took around 3 seconds to fit, which opens
+up the possibility of performing $R_t$ estimates in fine grained geographical
+or demographic subgroups.
+
+% Place figure captions after the first paragraph in which they are cited.
+\begin{figure}[!ht]
+\centerline{\includegraphics{fig/fig1-qualitative-comparison}}
+\caption{{\bf Instantaneous reproduction number estimates from a branching process model simulation.}
+A qualitative comparison of instantaneous reproduction number estimates is shown. Row A shows three case timeseries based on a single run of a branching process model paramterised with a stepped reproduction number time series (red lines in panel B) and infectivity profile as in supplementary figures 1 and 2. Case counts are shown as dots and a smoothed estimate of the cases per day as a line with shaded 95\% confidence intervals. All three timeseries have on average 70\% case ascertainment, however the day to day variability of ascertainment is parameterised as a logistic normal random variable, with ``minimum'' representing no variability in daily rate of ascertainment, ``moderate'' represents a coefficience of variation of the daily ascertainment is 1, and ``high'' when the coefficient of variation is 2. Row B shows estimates of the reproduction number based on the methods presented in this paper, for each of the ``minimum'', ``moderate'' and ``high'' variability in timeseries. Row C shows the result of running EpiEstim on the same case counts. In rows B and C the parameterised $R_t$ is shown as a solid red line, and the red dots show the instantaneous $R_t$ value realised in this one specific simulation (and which can be regarded as the ground truth for this single simulation run.}
+\label{fig1}
+\end{figure}
+
+% \begin{figure}[ht!]
+% \centerline{\includegraphics{fig/fig2-rt-parameters}}
+% \caption{{\bf Results figure.}
+% Descriprion
+% }
+% \label{fig3}
+% \end{figure}
+
+\section*{Discussion}
+
+TODO
+
+\section*{Conclusion}
+
+TODO
+
+\nolinenumbers
+
+\bibliography{refs}
+
+\section*{Funding}
+
+RC and LD are funded by UK Research and Innovation AI programme of the Engineering and Physical Sciences Research Council (EPSRC grant EP/Y028392/1;  \url{https://gow.epsrc.ukri.org/NGBOViewGrant.aspx?GrantRef=EP/Y028392/1}). RC and LD are affiliated with the JUNIPER partnership funded by the Medical Research Council (MRC grant MR/X018598/1; \url{https://www.ukri.org/councils/mrc/}). The views expressed are those of the authors. The funders had no role in study design, data collection and analysis, decision to publish, or preparation of the manuscript.
+
+\section*{Competing interests}
+
+\section*{Author contributions}
+
+RC and LD generated the research questions. RC performed the mathematical analysis and simulations, and created the supporting software package. RC and LD provided validation of the methods. LD provided supervision of the research. RC developed the first draft of the manuscript. RC and LD contributed to the final editing of the manuscript and its revision for publication and had responsibility for the decision to publish.
+
+\section*{Data and code availability}
+
+All data and code used for running experiments, model fitting, and plotting is available on a GitHub repository at \url{https://ai4ci.github.io/ggoutbreak-paper/}. The methods described here are implemented in the form of an R package to support the estimation of epidemiological parameters and it is deployed on the A14CI r-universe (\url{https://ai4ci.r-universe.dev/ggoutbreak}). We have also used Zenodo to assign a DOI to the repository: doi:10.5281/zenodo.7691196.
+
+\section*{Supporting information}
+
+% Include only the SI item label in the paragraph heading. Use the \nameref{label} command to cite SI items in the text.
+
+% \paragraph*{S1 Appendix.}
+% \label{S1_Appendix}
+% {\bf Sensitivity and specificity of combined panel tests.} Derivation of the performance metrics and true prevalence adjustments for combination tests.
+
+\end{document}
+

@@ -1,0 +1,206 @@
+\begin{thebibliography}{10}
+
+\bibitem{gostic2020}
+Gostic KM, McGough L, Baskerville EB, Abbott S, Joshi K, Tedijanto C, et~al.
+\newblock Practical Considerations for Measuring the Effective Reproductive
+  Number, {{Rt}};16(12):e1008409.
+\newblock doi:{10.1371/journal.pcbi.1008409}.
+
+\bibitem{davies2021}
+Davies NG, Abbott S, Barnard RC, Jarvis CI, Kucharski AJ, Munday JD, et~al.
+\newblock Estimated Transmissibility and Impact of {{SARS-CoV-2}} Lineage
+  {{B}}.1.1.7 in {{England}};372(6538).
+\newblock doi:{10.1126/science.abg3055}.
+
+\bibitem{abbott2024}
+Abbott S, Hellewell J, Sherratt K, Gostic K, Hickson J, Badr HS, et~al..
+  {{EpiNow2}}: {{Estimate}} Real-Time Case Counts and Time-Varying
+  Epidemiological Parameters;.
+\newblock Available from: \url{https://epiforecasts.io/EpiNow2/}.
+
+\bibitem{alvarez2021}
+Alvarez L, Colom M, Morel JD, Morel JM.
+\newblock Computing the Daily Reproduction Number of {{COVID-19}} by Inverting
+  the Renewal Equation Using a Variational Technique;118(50):e2105112118.
+\newblock doi:{10.1073/pnas.2105112118}.
+
+\bibitem{parag2021}
+Parag KV.
+\newblock Improved Estimation of Time-Varying Reproduction Numbers at Low Case
+  Incidence and between Epidemic Waves;17(9):e1009347.
+\newblock doi:{10.1371/journal.pcbi.1009347}.
+
+\bibitem{thompson2019}
+Thompson RN, Stockwin JE, family=Gaalen pu given=R~D, Polonsky JA, Kamvar ZN,
+  Demarsh PA, et~al.
+\newblock Improved Inference of Time-Varying Reproduction Numbers during
+  Infectious Disease Outbreaks;29:100356.
+\newblock doi:{10.1016/j.epidem.2019.100356}.
+
+\bibitem{wallinga2006}
+Wallinga J, Lipsitch M.
+\newblock How Generation Intervals Shape the Relationship between Growth Rates
+  and Reproductive Numbers;doi:{10.1098/rspb.2006.3754}.
+
+\bibitem{steyn2024}
+Steyn N, Parag KV. Robust Uncertainty Quantification in Popular Estimators of
+  the Instantaneous Reproduction Number;.
+\newblock Available from:
+  \url{https://www.medrxiv.org/content/10.1101/2024.10.22.24315918v1}.
+
+\bibitem{nash2023}
+Nash RK, Bhatt S, Cori A, Nouvellet P.
+\newblock Estimating the Epidemic Reproduction Number from Temporally
+  Aggregated Incidence Data: {{A}} Statistical Modelling Approach and Software
+  Tool;19(8):e1011439.
+\newblock doi:{10.1371/journal.pcbi.1011439}.
+
+\bibitem{nash2022}
+Nash RK, Nouvellet P, Cori A.
+\newblock Real-Time Estimation of the Epidemic Reproduction Number: {{Scoping}}
+  Review of the Applications and Challenges;1(6):e0000052.
+\newblock doi:{10.1371/journal.pdig.0000052}.
+
+\bibitem{cauchemez2006}
+Cauchemez S, Boëlle PY, Thomas G, Valleron AJ.
+\newblock Estimating in {{Real Time}} the {{Efficacy}} of {{Measures}} to
+  {{Control Emerging Communicable Diseases}};164(6):591--597.
+\newblock doi:{10.1093/aje/kwj274}.
+
+\bibitem{hong2020}
+Hong HG, Li Y.
+\newblock Estimation of Time-Varying Reproduction Numbers Underlying
+  Epidemiological Processes: {{A}} New Statistical Tool for the {{COVID-19}}
+  Pandemic;15(7):e0236464.
+\newblock doi:{10.1371/journal.pone.0236464}.
+
+\bibitem{johnson2021}
+Johnson KD, Beiglböck M, Eder M, Grass A, Hermisson J, Pammer G, et~al.
+\newblock Disease Momentum: {{Estimating}} the Reproduction Number in the
+  Presence of Superspreading;6:706--728.
+\newblock doi:{10.1016/j.idm.2021.03.006}.
+
+\bibitem{ogi-gittins2024}
+Ogi-Gittins I, Hart WS, Song J, Nash RK, Polonsky J, Cori A, et~al.
+\newblock A Simulation-Based Approach for Estimating the Time-Dependent
+  Reproduction Number from Temporally Aggregated Disease Incidence Time Series
+  Data;47:100773.
+\newblock doi:{10.1016/j.epidem.2024.100773}.
+
+\bibitem{abbott2020}
+Abbott S, Hellewell J, Thompson RN.
+\newblock Estimating the Time-Varying Reproduction Number of {{SARS-CoV-2}}
+  Using National and Subnational Case Counts [Version 2; Peer Review: 1
+  Approved, 1 Approved with Reservations];5(112).
+\newblock doi:{10.12688/wellcomeopenres.16006.2}.
+
+\bibitem{vegvari2022}
+Vegvari C, Abbott S, Ball F, Brooks-Pollock E, Challen R, Collyer BS, et~al.
+\newblock Commentary on the Use of the Reproduction Number {{R}} during the
+  {{COVID-19}} Pandemic;31(9):1675--1685.
+\newblock doi:{10.1177/09622802211037079}.
+
+\bibitem{park2021}
+Park SW, Sun K, Champredon D, Li M, Bolker BM, Earn DJD, et~al.
+\newblock Forward-Looking Serial Intervals Correctly Link Epidemic Growth to
+  Reproduction Numbers;118(2):e2011548118.
+\newblock doi:{10.1073/pnas.2011548118}.
+
+\bibitem{lo2013}
+Lo CF.
+\newblock {{WKB Approximation}} for the {{Sum}} of {{Two Correlated Lognormal
+  Random Variables}};7(129):6355--6367.
+\newblock doi:{10.2139/ssrn.2220803}.
+
+\bibitem{blanchard2021}
+Blanchard P, Higham DJ, Higham NJ.
+\newblock Accurately Computing the Log-Sum-Exp and Softmax
+  Functions;41(4):2311--2330.
+\newblock doi:{10.1093/imanum/draa038}.
+
+\bibitem{loader1999}
+Loader C.
+\newblock Local {{Regression}} and {{Likelihood}}.
+\newblock Statistics and {{Computing}}. Springer-Verlag;.
+\newblock Available from: \url{http://link.springer.com/10.1007/b98858}.
+
+\bibitem{loader2020}
+Loader C, Sun J, Technologies L, Liaw A. Locfit: {{Local Regression}},
+  {{Likelihood}} and {{Density Estimation}};.
+\newblock Available from: \url{https://CRAN.R-project.org/package=locfit}.
+
+\bibitem{anderson1996}
+Anderson JL.
+\newblock A {{Method}} for {{Producing}} and {{Evaluating Probabilistic
+  Forecasts}} from {{Ensemble Model Integrations}};9(7):1518--1530.
+\newblock doi:{10.1175/1520-0442(1996)009<1518:AMFPAE>2.0.CO;2}.
+
+\bibitem{bosse2024}
+Bosse NI, Gruson H, Cori A, van Leeuwen E, Funk S, Abbott S. Evaluating
+  {{Forecasts}} with Scoringutils in {{R}};.
+\newblock Available from: \url{http://arxiv.org/abs/2205.07090}.
+
+\bibitem{bosse2023}
+Bosse NI, Abbott S, Cori A, van Leeuwen E, Bracher J, Funk S.
+\newblock Scoring Epidemiological Forecasts on Transformed
+  Scales;19(8):e1011393.
+\newblock doi:{10.1371/journal.pcbi.1011393}.
+
+\bibitem{brocker2008}
+Bröcker J.
+\newblock On Reliability Analysis of Multi-Categorical
+  Forecasts;15(4):661--673.
+\newblock doi:{10.5194/npg-15-661-2008}.
+
+\bibitem{gneiting2007}
+Gneiting T, Raftery AE.
+\newblock Strictly {{Proper Scoring Rules}}, {{Prediction}}, and
+  {{Estimation}};102(477):359--378.
+\newblock doi:{10.1198/016214506000001437}.
+
+\bibitem{panaretos2019}
+Panaretos VM, Zemel Y.
+\newblock Statistical {{Aspects}} of {{Wasserstein Distances}};6:405--431.
+\newblock doi:{10.1146/annurev-statistics-030718-104938}.
+
+\bibitem{david1948}
+David FN, Johnson NL.
+\newblock The {{Probability Integral Transformation When Parameters}} Are
+  {{Estimated}} from the {{Sample}};35(1/2):182--190.
+\newblock doi:{10.2307/2332638}.
+
+\bibitem{hamill2001}
+Hamill TM.
+\newblock Interpretation of {{Rank Histograms}} for {{Verifying Ensemble
+  Forecasts}};129(3):550--560.
+\newblock doi:{10.1175/1520-0493(2001)129<0550:IORHFV>2.0.CO;2}.
+
+\bibitem{wilks2019}
+Wilks DS.
+\newblock Indices of {{Rank Histogram Flatness}} and {{Their Sampling
+  Properties}};147(2):763--769.
+\newblock doi:{10.1175/MWR-D-18-0369.1}.
+
+\bibitem{brockwell2007}
+Brockwell AE.
+\newblock Universal Residuals: {{A}} Multivariate
+  Transformation;77(14):1473--1478.
+\newblock doi:{10.1016/j.spl.2007.02.008}.
+
+\bibitem{nelder1972}
+Nelder JA, Wedderburn RWM.
+\newblock Generalized {{Linear Models}};135(3):370--384.
+\newblock doi:{10.2307/2344614}.
+
+\bibitem{hastie2017}
+Hastie TJ.
+\newblock Generalized {{Additive Models}}.
+\newblock Routledge;.
+
+\bibitem{rue2009}
+Rue H, Martino S, Chopin N.
+\newblock Approximate {{Bayesian}} Inference for Latent {{Gaussian}} Models by
+  Using Integrated Nested {{Laplace}} Approximations;71(2):319--392.
+\newblock doi:{10.1111/j.1467-9868.2008.00700.x}.
+
+\end{thebibliography}

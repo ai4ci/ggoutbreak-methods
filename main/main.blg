@@ -1,0 +1,177 @@
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: plos2015.bst
+Database file #1: refs.bib
+Warning--entry type for "bosse2024" isn't style-file defined
+--line 84 of file refs.bib
+Warning--entry type for "loader2020" isn't style-file defined
+--line 371 of file refs.bib
+Warning--entry type for "steyn2024" isn't style-file defined
+--line 582 of file refs.bib
+Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
+Reallocated global_strs (elt_size=200001) to 20 items from 10.
+Reallocated glb_str_end (elt_size=4) to 20 items from 10.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+`journal' is a missing field, not a string, for entry gostic2020
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in gostic2020
+Warning--empty year in gostic2020
+`journal' is a missing field, not a string, for entry davies2021
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in davies2021
+Warning--empty year in davies2021
+Warning--there's a month but no year in abbott2024
+`journal' is a missing field, not a string, for entry alvarez2021
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in alvarez2021
+Warning--empty year in alvarez2021
+`journal' is a missing field, not a string, for entry parag2021
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in parag2021
+Warning--empty year in parag2021
+Too many commas in name 3 of "Thompson, R.  N.  and Stockwin, J.  E.  and family=Gaalen, given=R.  D. , prefix=van, useprefix=true and Polonsky, J.  A.  and Kamvar, Z.  N.  and Demarsh, P.  A.  and Dahlqwist, E.  and Li, S.  and Miguel, E.  and Jombart, T.  and Lessler, J.  and Cauchemez, S.  and Cori, A. " for entry thompson2019
+while executing---line 1875 of file plos2015.bst
+`journal' is a missing field, not a string, for entry thompson2019
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in thompson2019
+Warning--empty year in thompson2019
+`journal' is a missing field, not a string, for entry wallinga2006
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in wallinga2006
+Warning--empty year in wallinga2006
+Warning--there's a month but no year in steyn2024
+`journal' is a missing field, not a string, for entry nash2023
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in nash2023
+Warning--empty year in nash2023
+`journal' is a missing field, not a string, for entry nash2022
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in nash2022
+Warning--empty year in nash2022
+`journal' is a missing field, not a string, for entry cauchemez2006
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in cauchemez2006
+Warning--empty year in cauchemez2006
+`journal' is a missing field, not a string, for entry hong2020
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in hong2020
+Warning--empty year in hong2020
+`journal' is a missing field, not a string, for entry johnson2021
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in johnson2021
+Warning--empty year in johnson2021
+`journal' is a missing field, not a string, for entry ogi-gittins2024
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in ogi-gittins2024
+Warning--empty year in ogi-gittins2024
+`journal' is a missing field, not a string, for entry abbott2020
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in abbott2020
+Warning--empty year in abbott2020
+`journal' is a missing field, not a string, for entry vegvari2022
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in vegvari2022
+Warning--empty year in vegvari2022
+`journal' is a missing field, not a string, for entry park2021
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in park2021
+Warning--empty year in park2021
+`journal' is a missing field, not a string, for entry lo2013
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in lo2013
+Warning--empty year in lo2013
+`journal' is a missing field, not a string, for entry blanchard2021
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in blanchard2021
+Warning--empty year in blanchard2021
+Warning--there's a month but no year in loader1999
+Warning--there's a month but no year in loader2020
+`journal' is a missing field, not a string, for entry anderson1996
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in anderson1996
+Warning--empty year in anderson1996
+Warning--there's a month but no year in bosse2024
+`journal' is a missing field, not a string, for entry bosse2023
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in bosse2023
+Warning--empty year in bosse2023
+`journal' is a missing field, not a string, for entry brocker2008
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in brocker2008
+Warning--empty year in brocker2008
+`journal' is a missing field, not a string, for entry gneiting2007
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in gneiting2007
+Warning--empty year in gneiting2007
+`journal' is a missing field, not a string, for entry panaretos2019
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in panaretos2019
+Warning--empty year in panaretos2019
+`journal' is a missing field, not a string, for entry david1948
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in david1948
+Warning--empty year in david1948
+`journal' is a missing field, not a string, for entry hamill2001
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in hamill2001
+Warning--empty year in hamill2001
+`journal' is a missing field, not a string, for entry wilks2019
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in wilks2019
+Warning--empty year in wilks2019
+`journal' is a missing field, not a string, for entry brockwell2007
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in brockwell2007
+Warning--empty year in brockwell2007
+`journal' is a missing field, not a string, for entry nelder1972
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in nelder1972
+Warning--empty year in nelder1972
+Warning--there's a month but no year in hastie2017
+`journal' is a missing field, not a string, for entry rue2009
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in rue2009
+Warning--empty year in rue2009
+You've used 34 entries,
+            3058 wiz_defined-function locations,
+            863 strings with 14683 characters,
+and the built_in function-call counts, 59869 in all, are:
+= -- 6985
+> -- 476
+< -- 0
++ -- 330
+- -- 119
+* -- 5549
+:= -- 6686
+add.period$ -- 98
+call.type$ -- 34
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 96
+duplicate$ -- 3308
+empty$ -- 5954
+format.name$ -- 144
+if$ -- 13543
+int.to.chr$ -- 0
+int.to.str$ -- 34
+missing$ -- 307
+newline$ -- 169
+num.names$ -- 34
+pop$ -- 532
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 509
+stack$ -- 0
+substring$ -- 13521
+swap$ -- 714
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 62
+while$ -- 289
+width$ -- 36
+write$ -- 339
+(There were 29 error messages)
