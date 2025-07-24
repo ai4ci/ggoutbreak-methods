@@ -4,6 +4,8 @@ library(patchwork)
 #devtools::load_all("~/Git/ggoutbreak")
 library(ggoutbreak)
 
+future::plan(future::multisession, workers = 12)
+
 source(here::here("R/utils.R"))
 
 .gg_pedantic(
@@ -142,7 +144,7 @@ fig1 =
 ## generate 5 outbreak scenarios ----
 
 # Setup caches and cached functions
-cache = memoise::cache_filesystem(here::here("cache"))
+# cache = memoise::cache_filesystem(here::here("cache"))
 
 setup_scenarios = function(n, seed) {
   withr::with_seed(seed, {
@@ -162,8 +164,11 @@ setup_scenarios = function(n, seed) {
   })
 }
 
-setup_scen = memoise::memoise(setup_scenarios, cache = cache)
-sim_bpm = memoise::memoise(sim_branching_process, cache = cache)
+#setup_scen = memoise::memoise(setup_scenarios, cache = cache)
+#sim_bpm = memoise::memoise(sim_branching_process, cache = cache)
+
+setup_scen = setup_scenarios
+sim_bpm = sim_branching_process
 
 
 qual_df = setup_scen(5, 100)
@@ -175,7 +180,7 @@ max_time = max(c(80, purrr::map_dbl(qual_df$changes, ~ max(.x$t))))
 ## nested `bpm` value is a individual level line list
 qual_df2 = qual_df %>%
   dplyr::mutate(
-    bpm = purrr::map2(
+    bpm = furrr::future_map2(
       changes,
       seed,
       ~ suppressMessages(sim_bpm(
@@ -220,7 +225,7 @@ qual_df4 = qual_df3 %>%
 
 ## estimate and compare scores for different methods for all 750 scenarios ----
 
-do_comparison = function(scenarios, window, use_lags, cutoff = 20) {
+do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
   # window = 14
   # scenarios = qual_df4 %>% filter(scenario==1, seed==min(seed))
 
@@ -251,19 +256,19 @@ do_comparison = function(scenarios, window, use_lags, cutoff = 20) {
         .progress = "Modelling incidence 1/3"
       )
     )
-
+  message("Rt from incidence (+scoring) 2/3")
   # Incidence model
   qual_df6 = qual_df5 %>%
     dplyr::mutate(
-      rt_incidence_bpm = purrr::map2(
+      rt_incidence_bpm = furrr::future_map2(
         model_bpm,
         summ_bpm,
         ~ {
           withr::with_options(list("ggoutbreak.keep_cdf" = TRUE), {
-            tmp = rt_from_incidence(.x, ip = ip, approx = TRUE)
-            tmp2 = score_estimate(
-              est = tmp %>% filter(time > cutoff),
-              obs = .y %>% rename(rt.obs = rt.weighted),
+            tmp = ggoutbreak::rt_from_incidence(.x, ip = ip, approx = TRUE)
+            tmp2 = ggoutbreak::score_estimate(
+              est = tmp |> dplyr::filter(time > date_cutoff),
+              obs = .y |> dplyr::rename(rt.obs = rt.weighted),
               lags = incid_lag,
               # we have 50 replicates so we don't need lots of boots
               # we are not summarising for this estimate as we will combine it
@@ -271,26 +276,31 @@ do_comparison = function(scenarios, window, use_lags, cutoff = 20) {
               bootstraps = 20,
               raw_bootstraps = TRUE
             )
-            tmp = tmp %>% select(-tidyselect::ends_with(".cdf"))
+            tmp = tmp |> dplyr::select(-tidyselect::ends_with(".cdf"))
           })
           return(list(est = tmp, score = tmp2))
         },
-        .progress = "Rt from incidence (+scoring) 2/3"
+        .progress = TRUE #"Rt from incidence (+scoring) 2/3"
       )
     )
 
   # Cori method model - equivalent to EpiEstim with Quantile Bias score.
-
+  message("EpiEstim (+scoring) 3/3")
   qual_df7 = qual_df6 %>%
     dplyr::mutate(
-      rt_cori_bpm = purrr::map2(
+      rt_cori_bpm = furrr::future_map2(
         obs_bpm,
         summ_bpm,
         ~ {
           withr::with_options(list("ggoutbreak.keep_cdf" = TRUE), {
-            tmp = rt_cori(.x, ip = ip, window = window, epiestim_compat = TRUE)
-            tmp2 = score_estimate(
-              est = tmp %>% filter(time > cutoff),
+            tmp = ggoutbreak::rt_cori(
+              .x,
+              ip = ip,
+              window = window,
+              epiestim_compat = TRUE
+            )
+            tmp2 = ggoutbreak::score_estimate(
+              est = tmp %>% filter(time > date_cutoff),
               obs = .y %>% rename(rt.obs = rt.weighted),
               lags = cori_lag,
               # we have 50 replicates so we don't need lots of boots
@@ -303,7 +313,7 @@ do_comparison = function(scenarios, window, use_lags, cutoff = 20) {
           })
           return(list(est = tmp, score = tmp2))
         },
-        .progress = "EpiEstim (+scoring) 3/3"
+        .progress = TRUE # "EpiEstim (+scoring) 3/3"
       )
     )
 
@@ -487,6 +497,7 @@ do_figure_2 = function(qual_df9) {
     ) +
     geom_line() +
     geom_line(data = tmp2, aes(y = rt.weighted), colour = "black") +
+    geom_hline(yintercept = 1, colour = "grey30") +
     facet_grid(scenario ~ .kappa_lbl(asc_kappa)) +
     coord_cartesian(ylim = c(0, 2)) +
     ylab("Rₜ")
@@ -502,12 +513,6 @@ do_figure_2 = function(qual_df9) {
     ylab("CRPS") +
     coord_cartesian(ylim = c(0, NA))
 
-  # p2 = ggplot(tmp, aes(y = percent_iqr_coverage, fill = method, x = .kappa_lbl(asc_kappa))) +
-  #   geom_boxplot(outliers = FALSE) +
-  #   #theme(legend.position = "bottom")+
-  #   xlab("Dispersion") +
-  #   ylab("50% coverage")
-
   p2 = ggplot(
     tmp,
     aes(
@@ -519,22 +524,8 @@ do_figure_2 = function(qual_df9) {
     geom_boxplot(outliers = FALSE) +
     #theme(legend.position = "bottom")+
     xlab("Dispersion") +
-    geom_hline(yintercept = 0.5, colour = "grey30") +
-    ylab("Proportional bias (%)")
-
-  p2a = ggplot(
-    tmp,
-    aes(
-      y = mean_quantile_bias,
-      fill = method,
-      x = .kappa_lbl(asc_kappa)
-    )
-  ) +
-    geom_boxplot(outliers = FALSE) +
-    #theme(legend.position = "bottom")+
-    xlab("Dispersion") +
     geom_hline(yintercept = 0, colour = "grey30") +
-    ylab("Mean universal residual")
+    ylab("Proportional bias (%)")
 
   p3 = ggplot(
     tmp,
@@ -581,13 +572,28 @@ do_figure_2 = function(qual_df9) {
     ylab("PIT Wasserstein (adj)") +
     coord_cartesian(ylim = c(0, NA))
 
+  p6 = ggplot(
+    tmp,
+    aes(
+      y = threshold_misclassification_probability,
+      fill = method,
+      x = .kappa_lbl(asc_kappa)
+    )
+  ) +
+    geom_boxplot(outliers = FALSE) +
+    #theme(legend.position = "bottom")+
+    xlab("Dispersion") +
+    ylab("Threshold misclassification") +
+    coord_cartesian(ylim = c(0, NA))
+
   pout = p1 +
     guides(fill = guide_none()) +
     p2 +
-    p2a +
+    # p2a +
     p3 +
     p4 +
     p5 +
+    p6 +
     patchwork::plot_layout(guides = "collect", axes = "collect", ncol = 3) +
     plot_annotation(tag_levels = "A")
 
@@ -654,6 +660,7 @@ do_figure_2 = function(qual_df9) {
       outliers = FALSE
     ) +
     ylab("% Bias") +
+    geom_hline(yintercept = 0, colour = "grey30") +
     xlab("Scenario") +
     facet_wrap(~ .kappa_lbl(asc_kappa))
 
@@ -706,12 +713,32 @@ do_figure_2 = function(qual_df9) {
     xlab("Scenario") +
     facet_wrap(~ .kappa_lbl(asc_kappa))
 
+  sp6 = ggplot(
+    tmp,
+    aes(
+      x = as.factor(scenario),
+      y = threshold_misclassification_probability,
+      fill = method
+    )
+  ) +
+    geom_boxplot(
+      width = 0.5,
+      position = position_dodge(width = 0.6),
+      outliers = FALSE
+    ) +
+    #theme(legend.position = "bottom")+
+    xlab("Dispersion") +
+    ylab("Threshold misclassification") +
+    coord_cartesian(ylim = c(0, NA)) +
+    facet_wrap(~ .kappa_lbl(asc_kappa))
+
   spout = sp1 +
     guides(fill = guide_none()) +
     sp2 +
     sp3 +
     sp4 +
     sp5 +
+    sp6 +
     patchwork::plot_layout(guides = "collect", axes = "collect", ncol = 1) +
     plot_annotation(tag_levels = "A")
 

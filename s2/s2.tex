@@ -124,7 +124,7 @@ For a single prediction we can assign a logical value to the condition that the 
 
 \begin{equation*}
 \begin{aligned}
-\mathcal{P}_{X,0.5} &= \frac{1}{n} \sum_n{ I ( 0.25 \le F_i(X_i) \le 0.75 )  } \\
+\mathcal{P}_{X,0.5} &= \frac{1}{n} \sum_n{ 1( 0.25 \le F_i(X_i) \le 0.75 )  } \\
 \end{aligned}
 \mytag{eq:cover}
 \end{equation*}
@@ -150,6 +150,18 @@ U^*_{pit} &= \frac{1}{n}\sum_{i=1}^n{(rank_i - u_{i,adj}) \times \sgn(0.5-rank_i
 \end{aligned}
 \mytag{eq:pit3}
 \end{equation*}
+
+Whilst these generic metrics are informative, the main value of an $R_t$ estimate is to answer the question ``is the epidemic increasing?'' and a metric for $R_t$ comparison which describes how accurately, and with what confidence, the estimator predicts when the $R_t$ value is greater or less than 1, is useful. In some situations it may be preferable to have an over sharp, poorly calibrated estimate if it is better at predicting the growth phases of the epidemic. We consider the probability of an erroneous conclusion at a threshold value $T$ for an individual prediction, compared to the true value ($\mathcal{P}_{i,err}$). If we combine these for an estimator, using a weighted average, where the weight is the distance of the true value from the threshold on the link function scale then we can define a threshold misclassification probability ($\mathcal{P}_{err}$) as the probability the estimator will produce an prediction that can be misinterpreted against the threshold criteria, which in the case of $R_t$ is above or below 1:
+
+\begin{equation*}
+\begin{aligned}
+\mathcal{P}_{i,err} &= |F_i(T) - 1(X_i \le T)| \\
+\mathcal{P}_{err} &= \frac{\sum{\mathcal{P}_{i,err} \times |g(X_i) - g(T)|}}{\sum{|g(X_i) - g(T)|}}
+\end{aligned}
+\mytag{eq:tmp}
+\end{equation*}
+
+The threshold misclassification probability is relevant to variables such as $R_t$ and growth rate, but less so for incidence or prevalence, which do not have a natural threshold. It is a probability, and lower values are better for decision making. It will penalise situations where there is overt growth or decline but the prediction is either incorrect or is correct but excessively uncertain.
 
 \subsection{Validation}
 

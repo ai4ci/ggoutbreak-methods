@@ -11,8 +11,8 @@ Jeffrey~L. Anderson.
   {\path{doi:10.1175/1520-0442(1996)009<1518:AMFPAE>2.0.CO;2}}.
 
 \bibitem{bosse2024}
-Nikos~I. Bosse, Hugo Gruson, Anne Cori, prefix=van~useprefix=false
-  family=Leeuwen, given=Edwin, Sebastian Funk, and Sam Abbott.
+Nikos~I. Bosse, Hugo Gruson, Anne Cori, Edwin van Leeuwen, Sebastian Funk, and
+  Sam Abbott.
 \newblock Evaluating {{Forecasts}} with scoringutils in {{R}}.
 \newblock URL: \url{http://arxiv.org/abs/2205.07090}, \href
   {http://arxiv.org/abs/2205.07090} {\path{arXiv:2205.07090}}, \href
@@ -20,8 +20,8 @@ Nikos~I. Bosse, Hugo Gruson, Anne Cori, prefix=van~useprefix=false
   {\path{doi:10.48550/arXiv.2205.07090}}.
 
 \bibitem{bosse2023}
-Nikos~I. Bosse, Sam Abbott, Anne Cori, prefix=van~useprefix=false
-  family=Leeuwen, given=Edwin, Johannes Bracher, and Sebastian Funk.
+Nikos~I. Bosse, Sam Abbott, Anne Cori, Edwin van Leeuwen, Johannes Bracher, and
+  Sebastian Funk.
 \newblock Scoring epidemiological forecasts on transformed scales.
 \newblock 19(8):e1011393.
 \newblock URL:

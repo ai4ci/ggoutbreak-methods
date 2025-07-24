@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.18)  23 JUL 2025 15:17
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2024.3.18)  24 JUL 2025 15:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -599,22 +599,24 @@ File: fig/fig1-noise-qualitative.pdf Graphic file (type pdf)
 Package pdftex.def Info: fig/fig1-noise-qualitative.pdf  used on input line 416
 .
 (pdftex.def)             Requested size: 425.58894pt x 289.07928pt.
-<fig/tab1-lags.pdf, id=101, 163.57109pt x 42.1575pt>
+ [6]
+<fig/tab1-lags.pdf, id=115, 163.57109pt x 42.1575pt>
 File: fig/tab1-lags.pdf Graphic file (type pdf)
 <use fig/tab1-lags.pdf>
 Package pdftex.def Info: fig/tab1-lags.pdf  used on input line 426.
 (pdftex.def)             Requested size: 163.57068pt x 42.15738pt.
- [6] [7 <./fig/fig1-noise-qualitative.pdf> <./fig/tab1-lags.pdf>]
-<fig/fig2-comparison.pdf, id=147, 425.59pt x 216.81pt>
+ [7 <./fig/fig1-noise-qualitative.pdf> <./fig/tab1-lags.pdf>]
+<fig/fig2-comparison.pdf, id=151, 425.59pt x 216.81pt>
 File: fig/fig2-comparison.pdf Graphic file (type pdf)
 <use fig/fig2-comparison.pdf>
 Package pdftex.def Info: fig/fig2-comparison.pdf  used on input line 433.
 (pdftex.def)             Requested size: 425.58894pt x 216.80946pt.
  [8 <./fig/fig2-comparison.pdf>]
-[9] (./main.bbl (/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
+[9] (./main.bbl [10]
+(/usr/share/texlive/texmf-dist/tex/latex/ucs/data/uni-0.def
 File: uni-0.def 2013/05/13 UCS: Unicode data U+0000..U+00FF
-)
-[10] [11]) [12] 
+) [11]) [12]
+
 AED: lastpage setting LastPage
 [13] (./main.aux)
 Package rerunfilecheck Info: File `main.out' has not changed.
@@ -627,7 +629,7 @@ Here is how much of TeX's memory you used:
  33469 multiletter control sequences out of 15000+600000
  474947 words of font info for 81 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 67i,19n,76p,1525b,616s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,19n,76p,1982b,616s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
@@ -642,10 +644,10 @@ amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/s
 hare/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/te
 xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on main.pdf (13 pages, 294876 bytes).
+Output written on main.pdf (13 pages, 293636 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 260 compressed objects within 3 object streams
+ 325 PDF objects out of 1000 (max. 8388607)
+ 264 compressed objects within 3 object streams
  77 named destinations out of 1000 (max. 500000)
  18960 words of extra memory for PDF output out of 20736 (max. 10000000)
 
