@@ -66,6 +66,7 @@ events = attr(bpm, "events")
 count_bpm = bpm %>% sim_summarise_linelist()
 
 kappas = c(low = 0.1, medium = 0.4, high = 0.7)
+kappas = c(low = 0.1, medium = 0.5, high = 0.9)
 
 # # Dispersion parameters coefficient of variation
 # This is just for reference really so that we can report something easily.
@@ -76,7 +77,7 @@ kappas = c(low = 0.1, medium = 0.4, high = 0.7)
 #   format( sqrt(var)/(mean), digits = 4,scientific = TRUE)
 # })
 
-withr::with_seed(101, {
+withr::with_seed(102, {
   obs_bpm = bind_rows(lapply(seq_along(kappas), function(i) {
     # generate observed data for each of the ascertainment values
     # This is done by applying a per day random factor from a beta
@@ -104,7 +105,8 @@ withr::with_seed(101, {
 
   # calculate the RT using epiestim
   epiestim_bpm = obs_bpm %>%
-    rt_epiestim(ip = ip, window = 14) %>%
+    # rt_epiestim(ip = ip, window = 14) %>%
+    rt_cori(ip = ip, window = 14, epiestim_compat = TRUE) %>%
     mutate(model = "EpiEstim")
   rt_comparison = bind_rows(rt_incidence_bpm, epiestim_bpm) %>%
     group_by(model, variation)
