@@ -252,6 +252,10 @@ We describe the selection of metrics that we use to compare probabilistic estima
   \item the 50\% coverage probability. Ideally this is around 0.5, with lower values representing over-confidence in the estimator and larger values representing an excessively conservative estimator. Bias can affect this metric, and an alternative is the directed PIT-Wasserstein distance.
   \item the adjusted PIT-Wasserstein distance. In general lower values are better, but the trade off between sharpness and calibration has to be considered.
   \end{itemize}
+ \item Utility:
+  \begin{itemize}
+  \item the threshold misclassification probability. Lower values are better. High values penalise the proportion of an estimate that is wrongly on the other side of the threshold, scaled by the distance of the true value from the threshold. This will penalise estimators that provide evidence for the wrong outcome, and hence favours confident correct estimators even if they are too sharp.
+  \end{itemize}
 \end{itemize}
 
 \bibliography{../main/refs}

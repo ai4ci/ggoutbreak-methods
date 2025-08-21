@@ -10,7 +10,7 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: ../main/refs.bib
 Warning--empty journal in gostic2020
 Warning--empty year in gostic2020
-Too many commas in name 3 of "Thompson, R. N. and Stockwin, J. E. and family=Gaalen, given=R. D., prefix=van, useprefix=true and Polonsky, J. A. and Kamvar, Z. N. and Demarsh, P. A. and Dahlqwist, E. and Li, S. and Miguel, E. and Jombart, T. and Lessler, J. and Cauchemez, S. and Cori, A." for entry thompson2019
+Name 3 in "Thompson, R. N. and Stockwin, J. E. and van Gaalen, R. D., and Polonsky, J. A. and Kamvar, Z. N. and Demarsh, P. A. and Dahlqwist, E. and Li, S. and Miguel, E. and Jombart, T. and Lessler, J. and Cauchemez, S. and Cori, A." has a comma at the end for entry thompson2019
 while executing---line 1311 of file unsrturl.bst
 Warning--empty journal in thompson2019
 Warning--empty year in thompson2019
@@ -18,7 +18,7 @@ Warning--empty journal in parag2021
 Warning--empty year in parag2021
 You've used 3 entries,
             2555 wiz_defined-function locations,
-            594 strings with 6012 characters,
+            594 strings with 5976 characters,
 and the built_in function-call counts, 1637 in all, are:
 = -- 114
 > -- 128

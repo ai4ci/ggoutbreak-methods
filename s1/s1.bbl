@@ -16,9 +16,9 @@ Katelyn~M. Gostic, Lauren McGough, Edward~B. Baskerville, Sam Abbott, Keya
   {\path{doi:10.1371/journal.pcbi.1008409}}.
 
 \bibitem{thompson2019}
-R.~N. Thompson, J.~E. Stockwin, prefix=van~useprefix=true family=Gaalen,
-  given=R.~D., J.~A. Polonsky, Z.~N. Kamvar, P.~A. Demarsh, E.~Dahlqwist,
-  S.~Li, E.~Miguel, T.~Jombart, J.~Lessler, S.~Cauchemez, and A.~Cori.
+R.~N. Thompson, J.~E. Stockwin, R.~D. van Gaalen, J.~A. Polonsky, Z.~N. Kamvar,
+  P.~A. Demarsh, E.~Dahlqwist, S.~Li, E.~Miguel, T.~Jombart, J.~Lessler,
+  S.~Cauchemez, and A.~Cori.
 \newblock Improved inference of time-varying reproduction numbers during
   infectious disease outbreaks.
 \newblock 29:100356.

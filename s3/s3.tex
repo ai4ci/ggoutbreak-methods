@@ -1,0 +1,216 @@
+\documentclass[a4paper, 12pt, twoside]{article}
+    % General document formatting
+    \usepackage[a4paper,
+            left=20mm, right=20mm,
+			top=20mm, bottom=20mm]{geometry}
+    \usepackage[parfill]{parskip}
+    \usepackage[utf8]{inputenc}
+
+    % Related to math
+    \usepackage{amsmath,amssymb,amsfonts,amsthm}
+    \usepackage{mathtools}
+    \newcounter{tagno}
+    \setcounter{tagno}{0}
+    \newcommand{\mytag}[1]{\tag{\thetagno} \label{#1} \stepcounter{tagno}}
+
+    \usepackage{authblk}
+    \title{Supplementary 3: Bias in $ R_t $ Estimation Under Independence and Heuristics for Risk Assessment}
+    \author[1,2]{Robert Challen}
+    \author[1,2]{Leon Danon}
+    \affil[1]{AI4CI, University of Bristol, Bristol, UK.}
+    \affil[2]{Department of Engineering Mathematics, University of Bristol, Bristol, UK.}
+    \date{}                     %% if you don't need date to appear
+    \setcounter{Maxaffil}{0}
+    \renewcommand\Affilfont{\itshape\small}
+
+    % keep figures in same section
+    \usepackage{placeins}
+    \let\Oldsection\section
+    \renewcommand{\section}{\FloatBarrier\Oldsection}
+    \let\Oldsubsection\subsection
+    \renewcommand{\subsection}{\FloatBarrier\Oldsubsection}
+    \let\Oldsubsubsection\subsubsection
+    \renewcommand{\subsubsection}{\FloatBarrier\Oldsubsubsection}
+    \DeclareMathOperator{\sgn}{sgn}
+
+    % for \ie \eg
+    \usepackage{xspace}
+    \newcommand*{\eg}{e.g.\@\xspace}
+    \newcommand*{\ie}{i.e.\@\xspace}
+    \newcommand*{\nb}{N.b.\@\xspace}
+
+    \usepackage{booktabs}
+    \usepackage{multirow}
+    \usepackage[table,xcdraw]{xcolor}
+
+    % cite package, to clean up citations in the main text. Do not remove.
+%     \usepackage{cite}
+%     \bibliographystyle{plain}
+    \usepackage[hidelinks]{hyperref}
+    \usepackage[numbers]{natbib}
+    \bibliographystyle{unsrturl}
+
+\begin{document}
+
+\maketitle
+
+\section{Background}
+
+When the full posterior variance-covariance (VCOV) matrix of log-incidence estimates is unavailable, it is common to assume that uncertainty in $ \lambda_t $ is independent over time. This greatly simplifies computation, and as such it could be a pragmatic assumption to make even if a VCOV matrix is available, but it can introduce bias in $ R_t $ due to misestimation of the denominator’s variance and its covariance with the numerator.
+
+This note quantifies the bias in $ R_t $ under the independence assumption, and derives heuristics for detecting high-risk scenarios.
+
+In the situation that a VCOV matrix is not available from the esitmation framework we describe methods to approximate the VCOV matrix from residuals.
+
+\section{Bias from assuming independence}
+
+To recap the method described in the main paper, the renewal equation gives:
+
+\begin{eqnarray}
+\begin{aligned}
+R_t \approx \frac{\lambda_t}{\sum_{\tau=1}^k \omega_\tau \lambda_{t-\tau}} = \frac{\lambda_t}{S_t}
+\end{aligned}
+\end{eqnarray}
+
+where $ S_t $ is the expected infectious pressure from past cases. Using the Lo et al. \cite{lo2013} approximation, $ S_t \approx \text{Lognormal}(\mu_Z, \sigma_Z) $, with:
+\begin{eqnarray}
+\begin{aligned}
+\mu_Z &= \log S_+ - \frac{1}{2} \sigma_Z^2 \\
+m_\tau &= \mathbb{E}[\omega_\tau \lambda_{t-\tau}] = e^{\left( \mu_{t-\tau} + \log \omega_\tau + \frac{1}{2} \sigma_{t-\tau}^2 \right)} \\
+S_+ &= \sum_{\tau=1}^k m_\tau \\
+\end{aligned}
+\end{eqnarray}
+
+
+An approximation of the true variance of $ \log S_t $ is:
+
+\begin{eqnarray}
+\begin{aligned}
+\sigma_Z^2 = \frac{1}{S_+^2} \sum_{i,j=1}^k m_i m_j \Sigma_{ij}
+\quad \text{where} \quad
+\Sigma_{ij} = \text{Cov}(\log \lambda_{t-i}, \log \lambda_{t-j})
+\end{aligned}
+\end{eqnarray}This leads to a formulation of the distributional form of $R_t$ as:
+
+\begin{eqnarray}
+\begin{aligned}
+R_t &\sim \frac{Lognormal(\mu_t,\sigma_t)}
+{Lognormal( \mu_{Z}, \sigma_{Z})} = Lognormal( \mu_{R_t}, \sigma_{R_t}) \\
+\mu_{R_t} &= \mu_t - \mu_{Z} = \mu_t - \log S_+ + \frac{1}{2}\sigma_{Z}^2\\
+\sigma_{R_t} &= \sqrt{\sigma_t^2+\sigma_{Z}^2 - 2 \Sigma_{0Z}} \\
+\Sigma_{0Z} &= \text{Cov}(\log \lambda_0, \log S_t) \approx \frac{1}{S_+}\sum_{\tau=1}^k m_\tau \Sigma_{0\tau}\\
+\end{aligned}
+\end{eqnarray}
+
+% From the definition of $\sigma_{R_t}$ we can see that the naive estimate will necessarily be less certain than a true estimate.
+%
+% \begin{eqnarray}
+% \begin{aligned}
+% \Delta \sigma_{R_t}^2 &= \sigma_t^2+\sigma_{Z,true}^2 - 2 \Sigma_{0Z} - \sigma_t^2 -\sigma_{Z,naive}^2 \\
+% \Delta \sigma_{R_t}^2 &= \Delta \sigma_{Z}^2 - 2 \Sigma_{0Z}
+% \quad \text{where} \quad
+% \Delta \sigma_{Z}^2 = \frac{\sum_{i \ne j} m_i m_j \Sigma_{ij}}{S_+^2} \\
+% \Delta \sigma_{R_t}^2 &= \frac{\sum_{i \ne j} m_i m_j \Sigma_{ij}}{S_+^2} - 2 \frac{\sum_{\tau=1}^k m_\tau \Sigma_{0\tau}}{S_+}\\
+% \Delta \sigma_{R_t}^2 &=
+%     \frac{
+%         \sum_{i \ne j} m_i m_j \Sigma_{ij} - 2 \sum_{i,j=1}^k m_i m_j \Sigma_{0 i}
+%     }{S_+^2}\\
+% \Delta \sigma_{R_t}^2 &=
+%     \frac{
+%         \sum_{i \ne j} m_i m_j (\Sigma_{ij} - 2  \Sigma_{0i}) - 2 \sum_{\tau=1}^k m_\tau^2 \Sigma_{0\tau}
+%     }{S_+^2}\\
+% \end{aligned}
+% \end{eqnarray}
+
+Under the assumption of independence we can calculate a naive estimate of $R_t$ where $ \Sigma_{ij} = \delta_{ij} \sigma_{t-i} \sigma_{t-j} $ and $\Sigma_{0Z} = 0$. From the definition of $\mu_{R_t}$ we can also see it will be potentially biased. We can quantify this bias by looking at the ratio of median of true and `naive' estimates made under the assumption of independence, $B_{median}$, as follows:
+
+\begin{eqnarray}
+\begin{aligned}
+B_{median} &= \frac{\text{Median}[R_{t,true}]}{\text{Median}[R_{t,naive}]} =
+    \frac{
+        e^{(\mu_{R_{t,true}})}
+    }{
+        e^{(\mu_{R_{t,naive}})}
+    } \\
+\beta_{median} =  \log B_{median} &=
+    \mu_t - \log S_+ + \frac{1}{2}\sigma_{Z,true}^2  -
+    (\mu_t - \log S_+ + \frac{1}{2}\sigma_{Z,naive}^2)\\
+\beta_{median}  &= \frac{1}{2} ( \sigma_{Z,true}^2 - \sigma_{Z,naive}^2 )   = \frac{1}{2} \Delta \sigma_{Z}^2\\
+\sigma_{Z,naive}^2 &= \frac{1}{S_+^2} \sum_{\tau=1}^k m_\tau^2 \sigma_{t-\tau}^2\\
+\beta_{median} = \Delta \sigma_{Z}^2  &=  \frac{\sum_{i \ne j} m_i m_j \Sigma_{ij}}{S_+^2}
+\end{aligned}
+\end{eqnarray}
+
+
+
+
+$ \sigma_{Z,true}^2 $ includes off-diagonal terms compared to $ \sigma_{Z,naive}^2 $ and this leads to a systematic bias in the median $ R_t $ estimates by a factor of $[\exp(\Delta \sigma_Z^2) - 1]$. This is a strictly positive term, implying that assuming independence causes median estimates of $ R_t $ to be underestimated. It is not shown here but mean estimates of $R_t$ will be less biased and could potentially be overestimated in some unusual situations.
+
+If we do not have information on the correlation structure we can estimate the risk and magnitude of this bias using the weighted average variance ($V_+$), which is the effective uncertainty in the denominator components, and the maximum possible off-diagonal contribution to $ \sigma_Z^2 $, achieved under perfect correlation ($c_{\text{max}}$).
+
+\begin{eqnarray}
+\begin{aligned}
+V_+ = \sum_{\tau=1}^k \frac{m_\tau}{S_+} \sigma_{t-\tau}^2\\
+c_{\text{max}} = 1 - \sum_{\tau=1}^k \frac{m_\tau}{S_+}^2
+\end{aligned}
+\end{eqnarray}
+
+Then the maximum possible bias in $ R_t $ is:
+
+\begin{eqnarray}
+\begin{aligned}
+\max(\beta_{median}) &\approx \frac{1}{2} c_{\text{max}} V_+ \\
+\Delta R_t &= \text{Median}[R_{t,true}] - \text{Median}[R_{t,naive}] \\
+\max(\Delta R_t) &= \text{Median}[R_{t,naive}] ( e^{ \frac{1}{2} c_{\text{max}} V_+} -1  )
+\end{aligned}
+\end{eqnarray}
+
+We know this worst case scenario is moderated by the weight of the off diagonal covariance terms weighted by the infectivity profile, and that an estimate for the total weight of the variance-covariance is given by $V_+$. With this we can estimate the fractional contribution of the unaccounted for covariance:
+
+\begin{eqnarray}
+\begin{aligned}
+\text{Risk of bias} &= \frac{V_+}{\sigma_{Z,\text{naive}}^2}
+\end{aligned}
+\end{eqnarray}
+
+With these values we can identify specific situations where the bias is unacceptable, and in particular the relative error in $R_t$ estimates. Typically a maximum underestimate of $5\%$ will be tolerable given other uncertainties.
+
+\begin{eqnarray}
+\begin{aligned}
+0.05 &\ge e^{ \frac{1}{2} c_{\text{max}} V_+} -1 \\
+0.1 &\gtrsim c_{\text{max}} V_+ \gtrsim \overline{\sigma_t}^2
+\end{aligned}
+\end{eqnarray}
+
+In this expression $c_{\text{max}}$ is a unitless number between 0 and 1, and $V_+$ is a weighted average of the square of the $sigma$ parameters of our log normal incidence estimates. If the estimates for $\sigma_t$ are stable we can ignore the weighting and be confident that if the average $\overline{\sigma_t}$ is less than 0.3 then the magnitude of bias is acceptable. Secondly the off diagonal contribution $ c_{\text{max}} $ may be small, potentially due to a peaked infectivity profile, or stable incidence. Even in the situation where the maximum possible bias is large there may be mitigation due to the structure of the covariance matrix.
+
+In an integrated framework we can assess the risk of bias for every derived $R_t$ estimate when assuming independence and flag them as high risk if both the magnitude and the risk is high. and specifically if $\max(\Delta R_t) > 0.05$ and $\frac{V_+}{\sigma_{Z,\text{naive}}^2} > 5$.
+
+\section{Estimating VCOV from Residuals}
+
+If the VCOV matrix is not available from the incidence model, but raw data $ I_t $ and fitted $ \hat{\lambda}_t $ are, we can estimate a synthetic VCOV using Pearson residuals $\mathcal{r}_t$ and compute the sample autocorrelation $ \hat{\rho}_\tau $, and fit an exponential decal model by nonlinear least squares or method of moments:
+
+\begin{eqnarray}
+\begin{aligned}
+\mathcal{r}_t = \frac{I_t - \hat{\lambda}_t}{\sqrt{\hat{\lambda}_t}} \\
+\hat{\rho}_\tau = \text{Corr}(\mathcal{r}, \mathcal{r}_{t-\tau}) \\
+\rho_\tau \sim Exponential(-\alpha \tau)
+\quad \text{for } \tau = 1, \dots, k
+\end{aligned}
+\end{eqnarray}
+
+A synthetic VCOV matrix can then be reconstructed which captures the smoothness-induced correlation typical in GAMs and smoothing models. This estimates the data-level correlation, not full posterior uncertainty, but is sufficient for bias correction.
+
+\begin{eqnarray}
+\begin{aligned}
+\Sigma_{ij} = e^{-\alpha |j-i|} \cdot \sigma_{t-i} \sigma_{t-j}
+\end{aligned}
+\end{eqnarray}
+
+\section{Conclusion}
+
+While the independence assumption can introduce downward bias in $ R_t $, the magnitude is often small in practice. Because the bias is related to the uncertainty of the denominator, any bias will be also matched by an increase in the uncertainty of the $R_t$ estimate, which will tend to compensate in interpretation. In implementation we can save computational time by supporting the assumption of independence and detecting if the risk of bias is unacceptable. This also supports statistical frameworks that do not produce estimate VCOV matrices. In this latter case if the origial data is available we can further support these by providing the option to use a synthetic VCOV matrix.
+
+\bibliography{../main/refs}
+
+\end{document}

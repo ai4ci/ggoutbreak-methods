@@ -4,7 +4,7 @@ library(patchwork)
 #devtools::load_all("~/Git/ggoutbreak")
 library(ggoutbreak)
 
-future::plan(future::multisession, workers = 12)
+future::plan(future::multisession, workers = 8)
 
 source(here::here("R/utils.R"))
 
@@ -63,9 +63,12 @@ bpm = sim_branching_process(
   fn_imports = ~ ifelse(.x == 0, 30, 0)
 )
 events = attr(bpm, "events")
-count_bpm = bpm %>% sim_summarise_linelist()
+count_bpm = bpm %>%
+  sim_summarise_linelist() %>%
+  group_by(statistic) %>%
+  select(-obs_time)
 
-kappas = c(low = 0.1, medium = 0.4, high = 0.7)
+# kappas = c(low = 0.1, medium = 0.4, high = 0.7)
 kappas = c(low = 0.1, medium = 0.5, high = 0.9)
 
 # # Dispersion parameters coefficient of variation
@@ -95,20 +98,28 @@ withr::with_seed(102, {
   # Generate an estimate of incidence from the observed BPM with noise
   # using a poisson model with log link function
   model_bpm = obs_bpm %>%
-    poisson_locfit_model(window = 14, deg = 2) %>%
+    poisson_locfit_model(window = 14, deg = 2, ip = ip, quick = TRUE) %>%
     mutate(model = "Incidence model")
 
   # calculate the RT from incidence
   rt_incidence_bpm = model_bpm %>%
-    rt_from_incidence(ip = ip, approx = FALSE) %>%
-    mutate(model = "Rₜ from incidence")
+    # rt_from_incidence(ip = ip, approx = TRUE) %>%
+    mutate(model = "Rₜ locfit")
+
+  gam_incidence_bpm = obs_bpm %>%
+    poisson_gam_model(ip = ip, window = 14) %>%
+    mutate(model = "Rₜ GAM")
 
   # calculate the RT using epiestim
   epiestim_bpm = obs_bpm %>%
     # rt_epiestim(ip = ip, window = 14) %>%
     rt_cori(ip = ip, window = 14, epiestim_compat = TRUE) %>%
     mutate(model = "EpiEstim")
-  rt_comparison = bind_rows(rt_incidence_bpm, epiestim_bpm) %>%
+  rt_comparison = bind_rows(
+    rt_incidence_bpm,
+    epiestim_bpm,
+    gam_incidence_bpm
+  ) %>%
     group_by(model, variation)
 })
 
@@ -128,8 +139,10 @@ fig1 =
   theme(axis.text.x.bottom = element_blank()) +
   p2 +
   theme(axis.text.x.top = element_blank()) +
-  patchwork::plot_layout(ncol = 1, axes = "collect", heights = c(1, 2)) +
+  patchwork::plot_layout(ncol = 1, axes = "collect", heights = c(1, 3)) +
   patchwork::plot_annotation(tag_levels = "A")
+
+fig1
 
 .gg_save_as(
   fig1,
@@ -199,7 +212,13 @@ qual_df2 = qual_df %>%
 # Summarise the BPM linelists to a daily count
 qual_df2 = qual_df2 %>%
   dplyr::mutate(
-    summ_bpm = purrr::map(bpm, ~ sim_summarise_linelist(.x), .progress = TRUE)
+    summ_bpm = purrr::map(
+      bpm,
+      ~ sim_summarise_linelist(.x) %>%
+        dplyr::group_by(statistic) %>%
+        dplyr::select(-obs_time),
+      .progress = TRUE
+    )
   )
 
 options("ggoutbreak.keep_cdf" = FALSE)
@@ -210,7 +229,7 @@ options("ggoutbreak.keep_cdf" = FALSE)
 
 qual_df3 = qual_df2 %>%
   dplyr::select(-bpm) %>%
-  tidyr::crossing(asc_kappa = c(0.1, 0.4, 0.7))
+  tidyr::crossing(asc_kappa = kappas)
 
 qual_df4 = qual_df3 %>%
   dplyr::mutate(
@@ -227,14 +246,19 @@ qual_df4 = qual_df3 %>%
 
 ## estimate and compare scores for different methods for all 750 scenarios ----
 
-do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
+do_comparison = function(scenarios, use_lags, date_cutoff = 20, window) {
   # window = 14
   # scenarios = qual_df4 %>% filter(scenario==1, seed==min(seed))
 
   if (use_lags) {
-    incid_lag = quantify_lag(
-      ~ poisson_locfit_model(.x, window = window, deg = 2) %>%
-        rt_from_incidence(ip = .y, approx = FALSE),
+    locfit_lag = quantify_lag(
+      ~ poisson_locfit_model(
+        .x,
+        window = window,
+        deg = 2,
+        ip = .y,
+        quick = TRUE
+      ),
       ip = ip
     )
     # We are using ggoutbreak reimplementation of CORI method here as is faster.
@@ -244,34 +268,76 @@ do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
       ~ rt_cori(.x, ip = .y, window = window, epiestim_compat = TRUE),
       ip = ip
     )
+
+    gam_lag = quantify_lag(
+      ~ poisson_gam_model(.x, window = window, ip = .y),
+      ip = ip
+    )
   } else {
-    incid_lag = NULL
+    locfit_lag = NULL
     cori_lag = NULL
+    gam_lag = NULL
   }
 
+  ## Locfit ----
   # qual_df4 %>% glimpse()
   qual_df5 = scenarios %>%
     dplyr::mutate(
       model_bpm = purrr::map(
         obs_bpm,
-        ~ poisson_locfit_model(.x, window = window, deg = 2),
-        .progress = "Modelling incidence 1/3"
+        ~ poisson_locfit_model(.x, window = window, deg = 2, quick = TRUE),
+        .progress = "Modelling incidence (locfit) 1/4"
       )
     )
-  message("Rt from incidence (+scoring) 2/3")
+  message("Rt Locfit (+scoring) 2/4")
   # Incidence model
-  qual_df6 = qual_df5 %>%
+  qual_df6 = scenarios %>%
     dplyr::mutate(
-      rt_incidence_bpm = furrr::future_map2(
-        model_bpm,
+      rt_locfit_bpm = furrr::future_map2(
+        obs_bpm,
         summ_bpm,
         ~ {
           withr::with_options(list("ggoutbreak.keep_cdf" = TRUE), {
-            tmp = ggoutbreak::rt_from_incidence(.x, ip = ip, approx = TRUE)
+            tmp = ggoutbreak::poisson_locfit_model(
+              .x,
+              window = window,
+              deg = 2,
+              ip = ip,
+              quick = TRUE
+            )
             tmp2 = ggoutbreak::score_estimate(
               est = tmp |> dplyr::filter(time > date_cutoff),
               obs = .y |> dplyr::rename(rt.obs = rt.weighted),
-              lags = incid_lag,
+              lags = locfit_lag,
+              # we have 50 replicates so we don't need lots of boots
+              # we are not summarising for this estimate as we will combine it
+              # with other replicates, in the plot
+              bootstraps = 20,
+              raw_bootstraps = TRUE
+            )
+            tmp = tmp |> dplyr::select(-tidyselect::ends_with(".cdf"))
+          })
+          return(list(est = tmp, score = tmp2))
+        },
+        .progress = TRUE #"Rt from incidence (+scoring) 2/3"
+      )
+    )
+
+  ## GAM ----
+  message("Rt GAM (+scoring) 3/4")
+  # Incidence model
+  qual_df6 = qual_df6 %>%
+    dplyr::mutate(
+      rt_gam_bpm = furrr::future_map2(
+        obs_bpm,
+        summ_bpm,
+        ~ {
+          withr::with_options(list("ggoutbreak.keep_cdf" = TRUE), {
+            tmp = ggoutbreak::poisson_gam_model(.x, window = window, ip = ip)
+            tmp2 = ggoutbreak::score_estimate(
+              est = tmp |> dplyr::filter(time > date_cutoff),
+              obs = .y |> dplyr::rename(rt.obs = rt.weighted),
+              lags = gam_lag,
               # we have 50 replicates so we don't need lots of boots
               # we are not summarising for this estimate as we will combine it
               # with other replicates, in the plot
@@ -287,7 +353,7 @@ do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
     )
 
   # Cori method model - equivalent to EpiEstim with Quantile Bias score.
-  message("EpiEstim (+scoring) 3/3")
+  message("EpiEstim (+scoring) 4/4")
   qual_df7 = qual_df6 %>%
     dplyr::mutate(
       rt_cori_bpm = furrr::future_map2(
@@ -321,16 +387,32 @@ do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
 
   tmp1 = qual_df7 %>%
     mutate(
-      rt_bpm = purrr::map(rt_incidence_bpm, ~ .x$est),
+      rt_bpm = purrr::map(rt_locfit_bpm, ~ .x$est),
       rt_score = purrr::map(
-        rt_incidence_bpm,
+        rt_locfit_bpm,
         ~ .x$score %>% filter(.type == "rt")
       ),
-      method = "Rₜ from incidence"
+      method = "Rₜ Locfit"
     ) %>%
     select(
       -rt_cori_bpm,
-      -rt_incidence_bpm #, -rt_epi_bpm
+      -rt_locfit_bpm,
+      -rt_gam_bpm, #, -rt_epi_bpm
+    )
+
+  tmp1b = qual_df7 %>%
+    mutate(
+      rt_bpm = purrr::map(rt_gam_bpm, ~ .x$est),
+      rt_score = purrr::map(
+        rt_gam_bpm,
+        ~ .x$score %>% filter(.type == "rt")
+      ),
+      method = "Rₜ GAM"
+    ) %>%
+    select(
+      -rt_cori_bpm,
+      -rt_locfit_bpm,
+      -rt_gam_bpm, #, -rt_epi_bpm
     )
 
   tmp2 = qual_df7 %>%
@@ -344,7 +426,8 @@ do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
     ) %>%
     select(
       -rt_cori_bpm,
-      -rt_incidence_bpm #, -rt_epi_bpm
+      -rt_locfit_bpm,
+      -rt_gam_bpm, #, -rt_epi_bpm
     ) %>%
     mutate(
       seed_id = min_rank(seed)
@@ -352,26 +435,28 @@ do_comparison = function(scenarios, window, use_lags, date_cutoff = 20) {
 
   # qual_df9 = dplyr::bind_rows(tmp1, tmp2)
 
-  return(dplyr::bind_rows(tmp1, tmp2))
+  return(dplyr::bind_rows(tmp1, tmp1b, tmp2))
 }
 
+#qual_df4_test = qual_df4 %>% filter(row_number() == 1)
+#qual_df9_test = do_comparison(qual_df4_test, TRUE, window = 14)
 
 if (interactive()) {
-  qual_df9 = do_comparison(qual_df4, 14, TRUE)
+  qual_df9 = do_comparison(qual_df4, TRUE, window = 14)
   saveRDS(qual_df9, here::here("cache/full_estimates_and_scoring.Rds"))
 } else {
   qual_df9 = readRDS(here::here("cache/full_estimates_and_scoring.Rds"))
 }
 
 if (interactive()) {
-  qual_df9_7_day = do_comparison(qual_df4, 7, TRUE)
+  qual_df9_7_day = do_comparison(qual_df4, TRUE, window = 7)
   saveRDS(qual_df9_7_day, here::here("cache/7_day_estimates_and_scoring.Rds"))
 } else {
   qual_df9_7_day = readRDS(here::here("cache/7_day_estimates_and_scoring.Rds"))
 }
 
 if (interactive()) {
-  qual_df9_no_lag = do_comparison(qual_df4, 14, FALSE)
+  qual_df9_no_lag = do_comparison(qual_df4, FALSE, window = 14)
   saveRDS(qual_df9_no_lag, here::here("cache/no_lag_estimates_and_scoring.Rds"))
 } else {
   qual_df9_no_lag = readRDS(here::here(
@@ -380,18 +465,24 @@ if (interactive()) {
 }
 
 
-incid_lag = quantify_lag(
-  ~ poisson_locfit_model(.x, window = 14, deg = 2) %>%
-    rt_from_incidence(ip = .y, approx = FALSE),
+locfit_lag = quantify_lag(
+  ~ poisson_locfit_model(.x, window = 14, deg = 2, ip = .y, quick = TRUE),
+  ip = ip
+)
+gam_lag = quantify_lag(
+  ~ poisson_gam_model(.x, window = 14, ip = .y),
   ip = ip
 )
 cori_lag = quantify_lag(
   ~ rt_cori(.x, ip = .y, window = 14, epiestim_compat = TRUE),
   ip = ip
 )
-incid_lag_2 = quantify_lag(
-  ~ poisson_locfit_model(.x, window = 7, deg = 2) %>%
-    rt_from_incidence(ip = .y, approx = FALSE),
+locfit_lag_2 = quantify_lag(
+  ~ poisson_locfit_model(.x, window = 7, deg = 2, ip = .y, quick = TRUE),
+  ip = ip
+)
+gam_lag_2 = quantify_lag(
+  ~ poisson_gam_model(.x, window = 7, ip = .y),
   ip = ip
 )
 cori_lag_2 = quantify_lag(
@@ -400,9 +491,11 @@ cori_lag_2 = quantify_lag(
 )
 
 lagtable = bind_rows(
-  incid_lag %>% mutate(method = "Rₜ from incidence", window = 14),
+  locfit_lag %>% mutate(method = "Rₜ Locfit", window = 14),
+  gam_lag %>% mutate(method = "Rₜ GAM", window = 14),
   cori_lag %>% mutate(method = "EpiEstim", window = 14),
-  incid_lag_2 %>% mutate(method = "Rₜ from incidence", window = 7),
+  locfit_lag_2 %>% mutate(method = "Rₜ Locfit", window = 7),
+  gam_lag_2 %>% mutate(method = "Rₜ GAM", window = 7),
   cori_lag_2 %>% mutate(method = "EpiEstim", window = 7)
 ) %>%
   filter(estimate == "rt") %>%
@@ -415,12 +508,16 @@ lagtable %>%
   .hux_save_as("main/fig/tab1-lags.pdf", size = std_size$quarter_portrait)
 
 lagplot = bind_rows(
-  attributes(incid_lag)$data %>%
-    mutate(method = "Rₜ from incidence", window = 14),
+  attributes(locfit_lag)$data %>%
+    mutate(method = "Rₜ Locfit", window = 14),
+  attributes(gam_lag)$data %>%
+    mutate(method = "Rₜ GAM", window = 14),
   attributes(cori_lag)$data %>%
     mutate(method = "EpiEstim", window = 14),
-  attributes(incid_lag_2)$data %>%
-    mutate(method = "Rₜ from incidence", window = 7),
+  attributes(locfit_lag_2)$data %>%
+    mutate(method = "Rₜ Locfit", window = 7),
+  attributes(gam_lag_2)$data %>%
+    mutate(method = "Rₜ GAM", window = 7),
   attributes(cori_lag_2)$data %>%
     mutate(method = "EpiEstim", window = 7)
 ) %>%
@@ -599,42 +696,6 @@ do_figure_2 = function(qual_df9) {
     patchwork::plot_layout(guides = "collect", axes = "collect", ncol = 3) +
     plot_annotation(tag_levels = "A")
 
-  # pout
-
-  # aggregate CPRS for scenarios and methods and p-values
-  # comp = tmp %>%
-  #   group_by(asc_kappa, scenario) %>%
-  #   group_modify(function(d, g, ...) {
-  #     if (n_distinct(d$method) == 2) {
-  #       tmp = t.test(mean_crps ~ method, d)
-  #       return(broom::tidy(tmp))
-  #     } else {
-  #       return(tibble::tibble())
-  #     }
-  #   })
-  #
-  # comp2 = tmp %>%
-  #   group_by(method, asc_kappa, scenario) %>%
-  #   summarise(
-  #     crps = mean(crps)
-  #   )
-
-  # sp0 = tmp %>%
-  #   group_by(method, asc_kappa, scenario, seed_id) %>%
-  #   reframe(
-  #     bias = sort(bias),
-  #     uniform = seq(-1, 1, length.out = n())
-  #   ) %>%
-  #   ggplot(aes(
-  #     colour = method,
-  #     group = interaction(scenario, seed_id),
-  #     x = uniform,
-  #     y = bias
-  #   )) +
-  #   geom_line() +
-  #   facet_grid(method ~ .kappa_lbl(asc_kappa)) +
-  #   geom_abline(colour = "grey40")
-
   sp1 = ggplot(
     tmp,
     aes(x = as.factor(scenario), y = mean_crps, fill = method)
@@ -744,223 +805,10 @@ do_figure_2 = function(qual_df9) {
     patchwork::plot_layout(guides = "collect", axes = "collect", ncol = 1) +
     plot_annotation(tag_levels = "A")
 
-  # # Earth movers distance to uniform from samples
-  # emd = function(x, lim = max(abs(x))) {
-  #   uniform = seq(-lim, lim, length.out = length(x))
-  #
-  #   # change < 0 when over confident on positive side
-  #   # and > 0 when over confident on negative side
-  #   change = uniform - sort(x)
-  #
-  #   # Divided by 2 here to move from -1 to 1, to 0 to 1 to conform to PIT
-  #   # rather than quantile bias.
-  #   tibble(
-  #     wasserstein = sum(abs(change)) / length(x) / 2,
-  #     # centrality will be positive if over confident
-  #     centrality = sum(change * sign(uniform)) / length(x) / 2,
-  #     n = length(x)
-  #   )
-  # }
-  #
-  # # wasserstein_CI = purrr::map(
-  # #   seq(2,5,0.1),
-  # #   \(n) sapply(1:10000,\(i) emd(runif(10^n,min=-1,max=1),lim=1)),
-  # #   .progress = TRUE
-  # # )
-  # #
-  # # wass_lims = tibble(
-  # #   n=10^seq(2,5,0.1),
-  # #   cis = wasserstein_CI %>% purrr::map(~ quantile(.x,c(0.75,0.95,0.995,0.9995,0.99995)))
-  # # )
-  # # plot_wass = wass_lims %>% mutate(id=purrr::map(cis, ~ c(0.75,0.95,0.995,0.9995,0.99995))) %>% unnest(c(id,cis))
-  # # ggplot(plot_wass,aes(x=n,y=cis,colour=factor(id)))+geom_line()+scale_x_log10()
-  #
-  # tmp3 = tmp %>%
-  #   filter(method %in% c("EpiEstim", "Rₜ from incidence")) %>%
-  #   group_by(method, asc_kappa, seed_id) %>%
-  #   group_modify(function(d, g, ...) {
-  #     out = emd(d$bias, lim = 1)
-  #
-  #     # KL distance from uniform using locfit.
-  #     # lftmp = locfit::locfit(~ locfit::lp(tmpfit,nn = 0.1))
-  #     # baseline = integrate(\(x,...) predict(lftmp,newdata=x),lower = -1,upper = 1)
-  #     # p_x = baseline$value/2
-  #     # KL = integrate(\(x) p_x * log(p_x/predict(lftmp,newdata=x)),lower = -1,upper = 1)$value
-  #     #  + integrate(\(x)  predict(lftmp,newdata=x) * log( predict(lftmp,newdata=x) / p_x),lower = -1,upper = 1)$value
-  #
-  #     return(out)
-  #   })
-  #
-  # # Quantile bias
-  #
-  # binwidth = 0.05
-  #
-  # limits = tmp %>%
-  #   group_by(method) %>%
-  #   count() %>%
-  #   mutate(
-  #     min_n = qbinom(0.025, size = n, prob = binwidth) / (n * binwidth),
-  #     mid_n = qbinom(0.5, size = n, prob = binwidth) / (n * binwidth),
-  #     max_n = qbinom(0.975, size = n, prob = binwidth) / (n * binwidth)
-  #   ) %>%
-  #   ungroup() %>%
-  #   summarise(across(where(is.numeric), mean))
-  #
-  # sp2 = ggplot(tmp, aes(x = mean_quantile_bias, colour = method)) + #,group=interaction(method,seed_id)))+
-  #   geom_step(
-  #     stat = "bin",
-  #     binwidth = 0.05,
-  #     mapping = aes(y = after_stat(density)),
-  #     direction = "mid"
-  #   ) +
-  #   xlab("PIT") +
-  #   ylab("Density") +
-  #   facet_grid(scenario ~ .kappa_lbl(asc_kappa)) +
-  #   theme(legend.position = "bottom") +
-  #   geom_hline(yintercept = limits$mid_n)
-  # # +
-  # # geom_hline(yintercept = limits$min_n, linetype="dashed")+
-  # # geom_hline(yintercept = limits$max_n, linetype="dashed")
-  # #geom_segment(aes(xend=bias,y=-0.1-ifelse(method=="EpiEstim",0.1,0), yend=-0.2-ifelse(method=="EpiEstim",0.1,0)),alpha=0.1)
-  #
-  # wass_ci = bind_rows(lapply(1:10000, \(i) {
-  #   emd(runif(3500, min = -1, max = 1), lim = 1)
-  # }))
-  #
-  # p2 = ggplot(
-  #   tmp3,
-  #   aes(x = .kappa_lbl(asc_kappa), y = wasserstein, fill = method)
-  # ) +
-  #   stat_summary(
-  #     fun = ~ quantile(.x, 0.5),
-  #     geom = "bar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.5,
-  #     colour = "black"
-  #   ) +
-  #   stat_summary(
-  #     fun.min = ~ quantile(.x, 0.025),
-  #     fun.max = ~ quantile(.x, 0.975),
-  #     geom = "errorbar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.1,
-  #     colour = "black"
-  #   ) +
-  #   # theme(legend.position = "bottom")+
-  #   geom_hline(
-  #     yintercept = quantile(wass_ci$wasserstein, c(0.95)),
-  #     linetype = "dotted"
-  #   ) +
-  #   xlab("Dispersion") +
-  #   geom_hline(yintercept = 0) +
-  #   ylab("PIT Wasserstein")
-  #
-  # p3 = ggplot(
-  #   tmp3,
-  #   aes(x = .kappa_lbl(asc_kappa), y = centrality, fill = method)
-  # ) +
-  #   stat_summary(
-  #     fun = ~ quantile(.x, 0.5),
-  #     geom = "bar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.5,
-  #     colour = "black"
-  #   ) +
-  #   stat_summary(
-  #     fun.min = ~ quantile(.x, 0.025),
-  #     fun.max = ~ quantile(.x, 0.975),
-  #     geom = "errorbar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.1,
-  #     colour = "black"
-  #   ) +
-  #   geom_hline(yintercept = 0) +
-  #   geom_hline(
-  #     yintercept = quantile(wass_ci$centrality, c(0.025)),
-  #     linetype = "dotted"
-  #   ) +
-  #   geom_hline(
-  #     yintercept = quantile(wass_ci$centrality, c(0.975)),
-  #     linetype = "dotted"
-  #   ) +
-  #   xlab("Dispersion") +
-  #   ylab("PIT Uncertainty")
-  #
-  # tmp4 = tmp %>%
-  #   filter(method %in% c("EpiEstim", "Rₜ from incidence")) %>%
-  #   group_by(method, scenario, asc_kappa, seed_id) %>%
-  #   group_modify(function(d, g, ...) {
-  #     out = emd(d$bias, lim = 1)
-  #     return(out)
-  #   })
-  #
-  # wass_ci_2 = bind_rows(lapply(1:10000, \(i) {
-  #   emd(runif(3500 / 5, min = -1, max = 1), lim = 1)
-  # }))
-  #
-  # p2a = ggplot(tmp4, aes(x = scenario, y = wasserstein, fill = method)) +
-  #   stat_summary(
-  #     fun = ~ quantile(.x, 0.5),
-  #     geom = "bar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.5,
-  #     colour = "black"
-  #   ) +
-  #   stat_summary(
-  #     fun.min = ~ quantile(.x, 0.025),
-  #     fun.max = ~ quantile(.x, 0.975),
-  #     geom = "errorbar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.1,
-  #     colour = "black"
-  #   ) +
-  #   # theme(legend.position = "bottom")+
-  #   geom_hline(
-  #     yintercept = quantile(wass_ci_2$wasserstein, c(0.95)),
-  #     linetype = "dotted"
-  #   ) +
-  #   xlab("Scenario") +
-  #   geom_hline(yintercept = 0) +
-  #   ylab("PIT Wasserstein") +
-  #   facet_wrap(~ .kappa_lbl(asc_kappa))
-  #
-  # p3a = ggplot(tmp4, aes(x = scenario, y = centrality, fill = method)) +
-  #   stat_summary(
-  #     fun = ~ quantile(.x, 0.5),
-  #     geom = "bar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.5,
-  #     colour = "black"
-  #   ) +
-  #   stat_summary(
-  #     fun.min = ~ quantile(.x, 0.025),
-  #     fun.max = ~ quantile(.x, 0.975),
-  #     geom = "errorbar",
-  #     position = position_dodge(width = 0.6),
-  #     width = 0.1,
-  #     colour = "black"
-  #   ) +
-  #   geom_hline(yintercept = 0) +
-  #   geom_hline(
-  #     yintercept = quantile(wass_ci_2$centrality, c(0.025)),
-  #     linetype = "dotted"
-  #   ) +
-  #   geom_hline(
-  #     yintercept = quantile(wass_ci_2$centrality, c(0.975)),
-  #     linetype = "dotted"
-  #   ) +
-  #   xlab("Scenario") +
-  #   ylab("PIT Uncertainty") +
-  #   facet_wrap(~ .kappa_lbl(asc_kappa))
-
   return(list(
     main = pout,
     s0 = s0,
     s1 = spout
-    # s2 = sp2,
-    # s3 = sp3,
-    # p2a = p2a,
-    # p3a = p3a
   ))
 }
 
@@ -1030,3 +878,58 @@ figs3 = do_figure_2(qual_df9_no_lag)
   size = std_size$full,
   formats = c("pdf", "eps")
 )
+
+# Testing against easles outbreak ----
+# data("Measles1861", package = "EpiEstim")
+# ip = ggoutbreak::make_empirical_ip(Measles1861$si_distr)
+# ggoutbreak::plot_ip(ip)
+#
+# data = dplyr::tibble(
+#   time = 0:(length(Measles1861$incidence) - 1) %>%
+#     as.time_period(start_date = "1861-11-25", unit = "1 day"),
+#   count = Measles1861$incidence
+# )
+# plot_counts(data)
+#
+# fits = data %>% poisson_gam_model(ip = ip, window = 4, quick = TRUE)
+# plot_incidence(fits, raw = data)
+# plot_growth_rate(fits)
+# plot_rt(fits) + ggplot2::coord_cartesian(ylim = c(0, 30))
+#
+# fits = data %>%
+#   poisson_gam_model(
+#     ip = ip,
+#     window = 3,
+#     quick = TRUE,
+#     model_fn = ggoutbreak::gam_nb_model_fn(window = 3)
+#   )
+# plot_incidence(fits, raw = data)
+# plot_growth_rate(fits)
+# plot_rt(fits)
+#
+#
+# fits = data %>% poisson_locfit_model(ip = ip, window = 4, quick = FALSE, )
+# plot_incidence(fits, raw = data)
+# plot_growth_rate(fits)
+# plot_rt(fits)
+#
+# data("Measles1861")
+# measlesDAT <- Measles1861
+# measles_incid <- measlesDAT$incidence
+# measles_si <- measlesDAT$si_distr
+# epifit_measles <- EpiLPS::estimR(measles_incid, si = measles_si, CoriR = T)
+# epicurve_measles <- EpiLPS::epicurve(
+#   measles_incid,
+#   datelab = "1d",
+#   title = "Measles, Hagelloch, Germany, 1861",
+#   col = "lightblue3",
+#   smooth = epifit_measles,
+#   smoothcol = "dodgerblue4"
+# )
+# Rplot_measles <- plot(epifit_measles, timecut = 6, legendpos = "none")
+# Rplot_measles2 <- plot(
+#   epifit_measles,
+#   addfit = "Cori",
+#   timecut = 6,
+#   legendpos = "top"
+# )

@@ -31,8 +31,8 @@ Parag KV.
 \newblock doi:{10.1371/journal.pcbi.1009347}.
 
 \bibitem{thompson2019}
-Thompson RN, Stockwin JE, family=Gaalen pu given=R~D, Polonsky JA, Kamvar ZN,
-  Demarsh PA, et~al.
+Thompson RN, Stockwin JE, van Gaalen RD, Polonsky JA, Kamvar ZN, Demarsh PA,
+  et~al.
 \newblock Improved Inference of Time-Varying Reproduction Numbers during
   Infectious Disease Outbreaks;29:100356.
 \newblock doi:{10.1016/j.epidem.2019.100356}.
@@ -60,6 +60,13 @@ Nash RK, Nouvellet P, Cori A.
 \newblock Real-Time Estimation of the Epidemic Reproduction Number: {{Scoping}}
   Review of the Applications and Challenges;1(6):e0000052.
 \newblock doi:{10.1371/journal.pdig.0000052}.
+
+\bibitem{gressani2022}
+Gressani O, Wallinga J, Althaus CL, Hens N, Faes C.
+\newblock {{EpiLPS}}: {{A}} Fast and Flexible {{Bayesian}} Tool for Estimation
+  of the Time-Varying Reproduction Number.
+\newblock PLOS Computational Biology. 2022;18(10):e1010618.
+\newblock doi:{10.1371/journal.pcbi.1010618}.
 
 \bibitem{cauchemez2006}
 Cauchemez S, Boëlle PY, Thomas G, Valleron AJ.
@@ -111,6 +118,23 @@ Lo CF.
 \newblock {{WKB Approximation}} for the {{Sum}} of {{Two Correlated Lognormal
   Random Variables}};7(129):6355--6367.
 \newblock doi:{10.2139/ssrn.2220803}.
+
+\bibitem{hastie2017}
+Hastie TJ.
+\newblock Generalized {{Additive Models}}.
+\newblock Routledge;.
+
+\bibitem{rue2009}
+Rue H, Martino S, Chopin N.
+\newblock Approximate {{Bayesian}} Inference for Latent {{Gaussian}} Models by
+  Using Integrated Nested {{Laplace}} Approximations;71(2):319--392.
+\newblock doi:{10.1111/j.1467-9868.2008.00700.x}.
+
+\bibitem{wood2017}
+Wood SN.
+\newblock Generalized {{Additive Models}}: {{An Introduction}} with {{R}},
+  {{Second Edition}}.
+\newblock 2nd ed. New York: {Chapman and Hall/CRC}; 2017.
 
 \bibitem{blanchard2021}
 Blanchard P, Higham DJ, Higham NJ.
@@ -191,16 +215,5 @@ Brockwell AE.
 Nelder JA, Wedderburn RWM.
 \newblock Generalized {{Linear Models}};135(3):370--384.
 \newblock doi:{10.2307/2344614}.
-
-\bibitem{hastie2017}
-Hastie TJ.
-\newblock Generalized {{Additive Models}}.
-\newblock Routledge;.
-
-\bibitem{rue2009}
-Rue H, Martino S, Chopin N.
-\newblock Approximate {{Bayesian}} Inference for Latent {{Gaussian}} Models by
-  Using Integrated Nested {{Laplace}} Approximations;71(2):319--392.
-\newblock doi:{10.1111/j.1467-9868.2008.00700.x}.
 
 \end{thebibliography}
