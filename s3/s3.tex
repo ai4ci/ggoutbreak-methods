@@ -86,9 +86,9 @@ An approximation of the true variance of $ \log S_t $ is:
 
 \begin{eqnarray}
 \begin{aligned}
-\sigma_Z^2 = \frac{1}{S_+^2} \sum_{i,j=1}^k m_i m_j \Sigma_{ij}
+\sigma_Z^2 = \frac{1}{S_+^2} \sum_{i,j=1}^k m_i m_j \mathbb{V}_{ij}
 \quad \text{where} \quad
-\Sigma_{ij} = \text{Cov}(\log \lambda_{t-i}, \log \lambda_{t-j})
+\mathbb{V}_{ij} = \text{Cov}(\log \lambda_{t-i}, \log \lambda_{t-j})
 \end{aligned}
 \end{eqnarray}This leads to a formulation of the distributional form of $R_t$ as:
 
@@ -97,8 +97,8 @@ An approximation of the true variance of $ \log S_t $ is:
 R_t &\sim \frac{Lognormal(\mu_t,\sigma_t)}
 {Lognormal( \mu_{Z}, \sigma_{Z})} = Lognormal( \mu_{R_t}, \sigma_{R_t}) \\
 \mu_{R_t} &= \mu_t - \mu_{Z} = \mu_t - \log S_+ + \frac{1}{2}\sigma_{Z}^2\\
-\sigma_{R_t} &= \sqrt{\sigma_t^2+\sigma_{Z}^2 - 2 \Sigma_{0Z}} \\
-\Sigma_{0Z} &= \text{Cov}(\log \lambda_0, \log S_t) \approx \frac{1}{S_+}\sum_{\tau=1}^k m_\tau \Sigma_{0\tau}\\
+\sigma_{R_t} &= \sqrt{\sigma_t^2+\sigma_{Z}^2 - 2 \mathbb{V}_{0Z}} \\
+\mathbb{V}_{0Z} &= \text{Cov}(\log \lambda_0, \log S_t) \approx \frac{1}{S_+}\sum_{\tau=1}^k m_\tau \mathbb{V}_{0\tau}\\
 \end{aligned}
 \end{eqnarray}
 
@@ -106,23 +106,23 @@ R_t &\sim \frac{Lognormal(\mu_t,\sigma_t)}
 %
 % \begin{eqnarray}
 % \begin{aligned}
-% \Delta \sigma_{R_t}^2 &= \sigma_t^2+\sigma_{Z,true}^2 - 2 \Sigma_{0Z} - \sigma_t^2 -\sigma_{Z,naive}^2 \\
-% \Delta \sigma_{R_t}^2 &= \Delta \sigma_{Z}^2 - 2 \Sigma_{0Z}
+% \Delta \sigma_{R_t}^2 &= \sigma_t^2+\sigma_{Z,true}^2 - 2 \mathbb{V}_{0Z} - \sigma_t^2 -\sigma_{Z,naive}^2 \\
+% \Delta \sigma_{R_t}^2 &= \Delta \sigma_{Z}^2 - 2 \mathbb{V}_{0Z}
 % \quad \text{where} \quad
-% \Delta \sigma_{Z}^2 = \frac{\sum_{i \ne j} m_i m_j \Sigma_{ij}}{S_+^2} \\
-% \Delta \sigma_{R_t}^2 &= \frac{\sum_{i \ne j} m_i m_j \Sigma_{ij}}{S_+^2} - 2 \frac{\sum_{\tau=1}^k m_\tau \Sigma_{0\tau}}{S_+}\\
+% \Delta \sigma_{Z}^2 = \frac{\sum_{i \ne j} m_i m_j \mathbb{V}_{ij}}{S_+^2} \\
+% \Delta \sigma_{R_t}^2 &= \frac{\sum_{i \ne j} m_i m_j \mathbb{V}_{ij}}{S_+^2} - 2 \frac{\sum_{\tau=1}^k m_\tau \mathbb{V}_{0\tau}}{S_+}\\
 % \Delta \sigma_{R_t}^2 &=
 %     \frac{
-%         \sum_{i \ne j} m_i m_j \Sigma_{ij} - 2 \sum_{i,j=1}^k m_i m_j \Sigma_{0 i}
+%         \sum_{i \ne j} m_i m_j \mathbb{V}_{ij} - 2 \sum_{i,j=1}^k m_i m_j \mathbb{V}_{0 i}
 %     }{S_+^2}\\
 % \Delta \sigma_{R_t}^2 &=
 %     \frac{
-%         \sum_{i \ne j} m_i m_j (\Sigma_{ij} - 2  \Sigma_{0i}) - 2 \sum_{\tau=1}^k m_\tau^2 \Sigma_{0\tau}
+%         \sum_{i \ne j} m_i m_j (\mathbb{V}_{ij} - 2  \mathbb{V}_{0i}) - 2 \sum_{\tau=1}^k m_\tau^2 \mathbb{V}_{0\tau}
 %     }{S_+^2}\\
 % \end{aligned}
 % \end{eqnarray}
 
-Under the assumption of independence we can calculate a naive estimate of $R_t$ where $ \Sigma_{ij} = \delta_{ij} \sigma_{t-i} \sigma_{t-j} $ and $\Sigma_{0Z} = 0$. From the definition of $\mu_{R_t}$ we can also see it will be potentially biased. We can quantify this bias by looking at the ratio of median of true and `naive' estimates made under the assumption of independence, $B_{median}$, as follows:
+Under the assumption of independence we can calculate a naive estimate of $R_t$ where $ \mathbb{V}_{ij} = \delta_{ij} \sigma_{t-i} \sigma_{t-j} $ and $\mathbb{V}_{0Z} = 0$. From the definition of $\mu_{R_t}$ we can also see it will be potentially biased. We can quantify this bias by looking at the ratio of median of true and `naive' estimates made under the assumption of independence, $B_{median}$, as follows:
 
 \begin{eqnarray}
 \begin{aligned}
@@ -137,7 +137,7 @@ B_{median} &= \frac{\text{Median}[R_{t,true}]}{\text{Median}[R_{t,naive}]} =
     (\mu_t - \log S_+ + \frac{1}{2}\sigma_{Z,naive}^2)\\
 \beta_{median}  &= \frac{1}{2} ( \sigma_{Z,true}^2 - \sigma_{Z,naive}^2 )   = \frac{1}{2} \Delta \sigma_{Z}^2\\
 \sigma_{Z,naive}^2 &= \frac{1}{S_+^2} \sum_{\tau=1}^k m_\tau^2 \sigma_{t-\tau}^2\\
-\beta_{median} = \Delta \sigma_{Z}^2  &=  \frac{\sum_{i \ne j} m_i m_j \Sigma_{ij}}{S_+^2}
+\beta_{median} = \Delta \sigma_{Z}^2  &=  \frac{\sum_{i \ne j} m_i m_j \mathbb{V}_{ij}}{S_+^2}
 \end{aligned}
 \end{eqnarray}
 
@@ -203,7 +203,7 @@ A synthetic VCOV matrix can then be reconstructed which captures the smoothness-
 
 \begin{eqnarray}
 \begin{aligned}
-\Sigma_{ij} = e^{-\alpha |j-i|} \cdot \sigma_{t-i} \sigma_{t-j}
+\mathbb{V}_{ij} = e^{-\alpha |j-i|} \cdot \sigma_{t-i} \sigma_{t-j}
 \end{aligned}
 \end{eqnarray}
 
