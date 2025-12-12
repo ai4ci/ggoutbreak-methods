@@ -76,7 +76,7 @@ where $ S_t $ is the expected infectious pressure from past cases. Using the Lo 
 \begin{eqnarray}
 \begin{aligned}
 \mu_Z &= \log S_+ - \frac{1}{2} \sigma_Z^2 \\
-m_\tau &= \mathbb{E}[\omega_\tau \lambda_{t-\tau}] = e^{\left( \mu_{t-\tau} + \log \omega_\tau + \frac{1}{2} \sigma_{t-\tau}^2 \right)} \\
+m_\tau &= E[\omega_\tau \lambda_{t-\tau}] = e^{\left( \mu_{t-\tau} + \log \omega_\tau + \frac{1}{2} \sigma_{t-\tau}^2 \right)} \\
 S_+ &= \sum_{\tau=1}^k m_\tau \\
 \end{aligned}
 \end{eqnarray}
@@ -182,7 +182,7 @@ With these values we can identify specific situations where the bias is unaccept
 \end{aligned}
 \end{eqnarray}
 
-In this expression $c_{\text{max}}$ is a unitless number between 0 and 1, and $V_+$ is a weighted average of the square of the $sigma$ parameters of our log normal incidence estimates. If the estimates for $\sigma_t$ are stable we can ignore the weighting and be confident that if the average $\overline{\sigma_t}$ is less than 0.3 then the magnitude of bias is acceptable. Secondly the off diagonal contribution $ c_{\text{max}} $ may be small, potentially due to a peaked infectivity profile, or stable incidence. Even in the situation where the maximum possible bias is large there may be mitigation due to the structure of the covariance matrix.
+In this expression $c_{\text{max}}$ is a unitless number between 0 and 1, and $V_+$ is a weighted average of the square of the $\sigma$ parameters of our log normal incidence estimates. If the estimates for $\sigma_t$ are stable we can ignore the weighting and be confident that if the average $\overline{\sigma_t}$ is less than 0.3 then the magnitude of bias is acceptable. Secondly the off diagonal contribution $ c_{\text{max}} $ may be small, potentially due to a peaked infectivity profile, or stable incidence. Even in the situation where the maximum possible bias is large there may be mitigation due to the structure of the covariance matrix.
 
 In an integrated framework we can assess the risk of bias for every derived $R_t$ estimate when assuming independence and flag them as high risk if both the magnitude and the risk is high. and specifically if $\max(\Delta R_t) > 0.05$ and $\frac{V_+}{\sigma_{Z,\text{naive}}^2} > 5$.
 
@@ -192,9 +192,9 @@ If the VCOV matrix is not available from the incidence model, but raw data $ I_t
 
 \begin{eqnarray}
 \begin{aligned}
-\mathcal{r}_t = \frac{I_t - \hat{\lambda}_t}{\sqrt{\hat{\lambda}_t}} \\
-\hat{\rho}_\tau = \text{Corr}(\mathcal{r}, \mathcal{r}_{t-\tau}) \\
-\rho_\tau \sim Exponential(-\alpha \tau)
+\mathcal{r}_t &= \frac{I_t - \hat{\lambda}_t}{\sqrt{\hat{\lambda}_t}} \\
+\hat{\rho}_\tau &= \text{Corr}(\mathcal{r}, \mathcal{r}_{t-\tau}) \\
+\rho_\tau &\sim Exponential(-\alpha \tau)
 \quad \text{for } \tau = 1, \dots, k
 \end{aligned}
 \end{eqnarray}

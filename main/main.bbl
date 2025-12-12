@@ -12,6 +12,25 @@ Davies NG, Abbott S, Barnard RC, Jarvis CI, Kucharski AJ, Munday JD, et~al.
   {{B}}.1.1.7 in {{England}};372(6538).
 \newblock doi:{10.1126/science.abg3055}.
 
+\bibitem{vegvari2022}
+Vegvari C, Abbott S, Ball F, Brooks-Pollock E, Challen R, Collyer BS, et~al.
+\newblock Commentary on the Use of the Reproduction Number {{R}} during the
+  {{COVID-19}} Pandemic;31(9):1675--1685.
+\newblock doi:{10.1177/09622802211037079}.
+
+\bibitem{cori2013}
+Cori A, Ferguson NM, Fraser C, Cauchemez S.
+\newblock A {{New Framework}} and {{Software}} to {{Estimate Time-Varying
+  Reproduction Numbers During Epidemics}};178(9):1505--1512.
+\newblock doi:{10.1093/aje/kwt133}.
+
+\bibitem{thompson2019}
+Thompson RN, Stockwin JE, van Gaalen RD, Polonsky JA, Kamvar ZN, Demarsh PA,
+  et~al.
+\newblock Improved Inference of Time-Varying Reproduction Numbers during
+  Infectious Disease Outbreaks;29:100356.
+\newblock doi:{10.1016/j.epidem.2019.100356}.
+
 \bibitem{abbott2024}
 Abbott S, Hellewell J, Sherratt K, Gostic K, Hickson J, Badr HS, et~al..
   {{EpiNow2}}: {{Estimate}} Real-Time Case Counts and Time-Varying
@@ -29,13 +48,6 @@ Parag KV.
 \newblock Improved Estimation of Time-Varying Reproduction Numbers at Low Case
   Incidence and between Epidemic Waves;17(9):e1009347.
 \newblock doi:{10.1371/journal.pcbi.1009347}.
-
-\bibitem{thompson2019}
-Thompson RN, Stockwin JE, van Gaalen RD, Polonsky JA, Kamvar ZN, Demarsh PA,
-  et~al.
-\newblock Improved Inference of Time-Varying Reproduction Numbers during
-  Infectious Disease Outbreaks;29:100356.
-\newblock doi:{10.1016/j.epidem.2019.100356}.
 
 \bibitem{wallinga2006}
 Wallinga J, Lipsitch M.
@@ -100,12 +112,6 @@ Abbott S, Hellewell J, Thompson RN.
   Using National and Subnational Case Counts [Version 2; Peer Review: 1
   Approved, 1 Approved with Reservations];5(112).
 \newblock doi:{10.12688/wellcomeopenres.16006.2}.
-
-\bibitem{vegvari2022}
-Vegvari C, Abbott S, Ball F, Brooks-Pollock E, Challen R, Collyer BS, et~al.
-\newblock Commentary on the Use of the Reproduction Number {{R}} during the
-  {{COVID-19}} Pandemic;31(9):1675--1685.
-\newblock doi:{10.1177/09622802211037079}.
 
 \bibitem{park2021}
 Park SW, Sun K, Champredon D, Li M, Bolker BM, Earn DJD, et~al.
