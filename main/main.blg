@@ -21,6 +21,20 @@ Warning--empty year in gostic2020
 while executing---line 1875 of file plos2015.bst
 Warning--empty journal in davies2021
 Warning--empty year in davies2021
+`journal' is a missing field, not a string, for entry vegvari2022
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in vegvari2022
+Warning--empty year in vegvari2022
+`journal' is a missing field, not a string, for entry cori2013
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in cori2013
+Warning--empty year in cori2013
+Name 3 in "Thompson, R.  N.  and Stockwin, J.  E.  and van Gaalen, R.  D. , and Polonsky, J.  A.  and Kamvar, Z.  N.  and Demarsh, P.  A.  and Dahlqwist, E.  and Li, S.  and Miguel, E.  and Jombart, T.  and Lessler, J.  and Cauchemez, S.  and Cori, A. " has a comma at the end for entry thompson2019
+while executing---line 1875 of file plos2015.bst
+`journal' is a missing field, not a string, for entry thompson2019
+while executing---line 1875 of file plos2015.bst
+Warning--empty journal in thompson2019
+Warning--empty year in thompson2019
 Warning--there's a month but no year in abbott2024
 `journal' is a missing field, not a string, for entry alvarez2021
 while executing---line 1875 of file plos2015.bst
@@ -30,12 +44,6 @@ Warning--empty year in alvarez2021
 while executing---line 1875 of file plos2015.bst
 Warning--empty journal in parag2021
 Warning--empty year in parag2021
-Name 3 in "Thompson, R.  N.  and Stockwin, J.  E.  and van Gaalen, R.  D. , and Polonsky, J.  A.  and Kamvar, Z.  N.  and Demarsh, P.  A.  and Dahlqwist, E.  and Li, S.  and Miguel, E.  and Jombart, T.  and Lessler, J.  and Cauchemez, S.  and Cori, A. " has a comma at the end for entry thompson2019
-while executing---line 1875 of file plos2015.bst
-`journal' is a missing field, not a string, for entry thompson2019
-while executing---line 1875 of file plos2015.bst
-Warning--empty journal in thompson2019
-Warning--empty year in thompson2019
 `journal' is a missing field, not a string, for entry wallinga2006
 while executing---line 1875 of file plos2015.bst
 Warning--empty journal in wallinga2006
@@ -69,10 +77,6 @@ Warning--empty year in ogi-gittins2024
 while executing---line 1875 of file plos2015.bst
 Warning--empty journal in abbott2020
 Warning--empty year in abbott2020
-`journal' is a missing field, not a string, for entry vegvari2022
-while executing---line 1875 of file plos2015.bst
-Warning--empty journal in vegvari2022
-Warning--empty year in vegvari2022
 `journal' is a missing field, not a string, for entry park2021
 while executing---line 1875 of file plos2015.bst
 Warning--empty journal in park2021
@@ -133,45 +137,45 @@ Warning--empty year in brockwell2007
 while executing---line 1875 of file plos2015.bst
 Warning--empty journal in nelder1972
 Warning--empty year in nelder1972
-You've used 36 entries,
+You've used 37 entries,
             3058 wiz_defined-function locations,
-            880 strings with 15172 characters,
-and the built_in function-call counts, 62186 in all, are:
-= -- 7271
-> -- 501
+            887 strings with 15424 characters,
+and the built_in function-call counts, 63798 in all, are:
+= -- 7462
+> -- 517
 < -- 1
-+ -- 344
-- -- 125
-* -- 5728
-:= -- 6949
-add.period$ -- 107
-call.type$ -- 36
++ -- 353
+- -- 129
+* -- 5873
+:= -- 7126
+add.period$ -- 110
+call.type$ -- 37
 change.case$ -- 2
 chr.to.int$ -- 3
-cite$ -- 98
-duplicate$ -- 3506
-empty$ -- 6174
-format.name$ -- 151
-if$ -- 14088
+cite$ -- 101
+duplicate$ -- 3616
+empty$ -- 6329
+format.name$ -- 156
+if$ -- 14453
 int.to.chr$ -- 0
-int.to.str$ -- 36
-missing$ -- 324
-newline$ -- 180
-num.names$ -- 36
-pop$ -- 562
+int.to.str$ -- 37
+missing$ -- 334
+newline$ -- 185
+num.names$ -- 37
+pop$ -- 580
 preamble$ -- 1
 purify$ -- 0
 quote$ -- 0
-skip$ -- 536
+skip$ -- 550
 stack$ -- 0
-substring$ -- 13900
-swap$ -- 759
+substring$ -- 14231
+swap$ -- 784
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 0
-warning$ -- 62
-while$ -- 305
-width$ -- 38
-write$ -- 363
-(There were 29 error messages)
+warning$ -- 64
+while$ -- 315
+width$ -- 39
+write$ -- 373
+(There were 30 error messages)

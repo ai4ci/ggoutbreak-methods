@@ -4,6 +4,7 @@ library(patchwork)
 #devtools::load_all("~/Git/ggoutbreak")
 library(ggoutbreak)
 
+ggoutbreak::set_defaults("2025-01-01", "1 day")
 future::plan(future::multisession, workers = 8)
 
 source(here::here("R/utils.R"))
@@ -14,6 +15,7 @@ source(here::here("R/utils.R"))
   fontSize = 6,
   panel.grid = element_blank()
 )
+
 
 # Infectivity profile ----
 # generate 100 epiestim compatible generation intervals with a mean of (approx) 5 and a SD of
@@ -183,7 +185,11 @@ setup_scenarios = function(n, seed) {
 #sim_bpm = memoise::memoise(sim_branching_process, cache = cache)
 
 setup_scen = setup_scenarios
-sim_bpm = sim_branching_process
+sim_bpm = carrier::crate(function(...) {
+  ggoutbreak::with_defaults("2025-01-01", "1 day", {
+    ggoutbreak::sim_branching_process(...)
+  })
+})
 
 
 qual_df = setup_scen(5, 100)

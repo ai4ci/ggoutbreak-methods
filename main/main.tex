@@ -253,12 +253,12 @@ As an aside, it has been shown that the sum of correlated log-normal distributed
 
 \begin{eqnarray}
 \begin{aligned}
-	S_+ &= \mathbb{E}\left[\sum_i X_i \right] = \sum_i
-	\mathbb{E}[X_i] \\
+	S_+ &= E\left[\sum_i X_i \right] = \sum_i
+	E[X_i] \\
 	&= \sum_i e^{\mu_i + \frac{1}{2}\sigma_i^2}
 	\\
 	\sigma^2_{Z} &= \frac{1}{S_+^2} \, \sum_{i,j}
-	  \rho_{ij} \sigma_i \sigma_j \mathbb{E}[X_i] \mathbb{E}[X_j] \\
+	  \rho_{ij} \sigma_i \sigma_j E[X_i] E[X_j] \\
 	  &= \frac{1}{S_+^2} \, \sum_{i,j}
 	  \rho_{ij} \sigma_i \sigma_j e^{\mu_i+\frac{1}{2}\sigma_i^2}
 	  e^{\mu_j+\frac{1}{2}\sigma_j^2}
@@ -406,9 +406,9 @@ In the main validation scenario we used a window for `EpiEstim', `GAM' and `Locf
 \label{tab1}
 \end{table}
 
-A quantification of the quality of the two estimation methods is shown in Fig~\ref{fig2} summarised from all 750 simulations, and corrected for estimator delays. In panel A the continuous ranked probability score is lower (better) for `$R_t$ GAM' and `$R_t$ Locfit' over all scenarios combined. In panel B the proportional difference between the true value and the median of the estimate probability (expressed as a percentage change) shows that the median of `EpiEstim` tends to slightly overestimate the true $R_t$ by around 2-3\% whereas `$R_t$ Locfit' exhibits little bias, with `$R_t$ GAM' in between. In Fig~\ref{fig2} panel C, the 50\% prediction interval width is smaller for `EpiEstim' and `$R_t$ GAM' demonstrating sharper, more confident, estimates than the predictions of `$R_t$ Locfit'. `$R_t$ Locfit' is the only method which has evidence of decreasing sharpness (increasing interval width - Fig~\ref{fig2} panel C) with increasing data noise. `EpiEstim' does not exhibit this change in sharpness with data noise and `$R_t$ GAM' only minimally. The low values of the probability of 50\% prediction coverage, as seen in panel D, which is ideally 0.5, implies that `EpiEstim` and `$R_t$ GAM' are over-confident in its predictions, `$R_t$ Locfit' on the other hand looks to be somewhat conservative. The PIT Wasserstein metric in Fig~\ref{fig2} panel E, allows us to compare the calibration of the 2 methods on the same scale, one of which is over confident and the other being under confident. This suggests `$R_t$ Locfit' is better calibrated than `EpiEstim' or `$R_t$ GAM' (albeit in a different direction). Finally Fig~\ref{fig2} panel F shows the probability of misclassification at the threshold of $R_t=1$ which is similar for `EpiEstim' and `$R_t$ Locfit', but lower (better) for `$R_t$ GAM'. We also looked at how these metrics varied between scenarios (details in \nameref{S1_Appendix} Fig S3 and S4) and the breakdown largely follows the summary presented in Fig~\ref{fig2}, although `$R_t$ GAM' performs relatively poorly in scenario 3, and in scenario 5, which has relatively little variation compared to the others, calibration is better for `EpiEstim', and `$R_t$ GAM' appears overconfident.
+A quantification of the quality of the two estimation methods is shown in Fig~\ref{fig2} summarised from all 750 simulations, and corrected for estimator delays. In panel A the continuous ranked probability score is lower (better) for `$R_t$ GAM' and `$R_t$ Locfit' over all scenarios combined. In panel B the proportional difference between the true value and the median of the estimate probability (expressed as a percentage change) shows that the `EpiEstim` and `$R_t$ GAM' exhibit little bias, whereas `$R_t$ Locfit' demonstrates a tendency to underestimation, in this set of experiments. In Fig~\ref{fig2} panel C, the 50\% prediction interval width is smaller for `EpiEstim' and `$R_t$ GAM' demonstrating sharper, more confident, estimates than the predictions of `$R_t$ Locfit'. `$R_t$ Locfit' is the only method which has evidence of decreasing sharpness (increasing interval width - Fig~\ref{fig2} panel C) with increasing data noise. `EpiEstim' does not exhibit this change in sharpness with data noise and `$R_t$ GAM' only minimally. The low values of the probability of 50\% prediction coverage, as seen in panel D, which is ideally 0.5, implies that `EpiEstim` and `$R_t$ GAM' are over-confident in its predictions, `$R_t$ Locfit' on the other hand looks to be somewhat conservative, at least with more noisy data. The PIT Wasserstein metric in Fig~\ref{fig2} panel E, allows us to compare the calibration of the 2 methods on the same scale, one of which is over confident and the other being under confident. This suggests `$R_t$ Locfit' is better calibrated than `EpiEstim' or `$R_t$ GAM' (albeit in a different direction). Finally Fig~\ref{fig2} panel F shows the probability of misclassification at the threshold of $R_t=1$ which is similar for `EpiEstim' and `$R_t$ Locfit', but lower (better) for `$R_t$ GAM'. We also looked at how these metrics varied between scenarios (details in \nameref{S1_Appendix} Fig S3 and S4) and the breakdown largely follows the summary presented in Fig~\ref{fig2}, although `$R_t$ GAM' performs relatively poorly in scenario 3, and in scenario 5, which has relatively little variation compared to the others, calibration is better for `EpiEstim', and `$R_t$ GAM' appears overconfident.
 
-\begin{figure}[!ht]
+\begin{figure}[!hb]
 \centerline{\includegraphics{fig/fig2-comparison}}
 \caption{{\bf Quantitative comparison of $R_t$ estimation methods applied to 50 simulations of 5 scenarios at 3 levels of ascertainment noise.} The figure compares metrics describing the overall performance of the estimators. In Panel A is the continuous ranked probability score (CRPS) - lower is better; the average proportional bias (panel B) which characterise bias - lower is better; In panel C, the 50\% prediction interval width measures estimator sharpness, and lower is better if the estimator is unbiased and well calibrated. In Panel D the probability of 50\% coverage (ideal value is 0.5), and in Panel E the adjusted probability integral transform (PIT) Wasserstein metric (lower is better) are both measures of calibration. In Panel F a functional metric which quantifies the probability that an estimate is the wrong side of the cirtical threshold of $R_t=1$ desribes utility in decision making.}
 \label{fig2}
@@ -438,7 +438,7 @@ Notwithstanding these limitations in validation, we argue our method for derivin
 
 \section*{Funding}
 
-RC and LD are funded by UK Research and Innovation AI programme of the Engineering and Physical Sciences Research Council (EPSRC grant EP/Y028392/1;  \url{https://gtr.ukri.org/projects?ref=EP%2FY028392%2F1}). RC and LD are affiliated with the JUNIPER partnership funded by the Medical Research Council (MRC grant MR/X018598/1; \url{https://www.ukri.org/councils/mrc/}). The views expressed are those of the authors.
+RC and LD are funded by UK Research and Innovation AI programme of the Engineering and Physical Sciences Research Council, AI for Collective Intelligence Research Hub (EPSRC grant EP/Y028392/1;  \url{https://gtr.ukri.org/projects?ref=EP%2FY028392%2F1}). RC and LD are affiliated with the JUNIPER partnership funded by the Medical Research Council (MRC grant MR/X018598/1; \url{https://www.ukri.org/councils/mrc/}). The views expressed are those of the authors.
 
 \section*{Competing interests}
 
@@ -454,7 +454,7 @@ We acknowledge the input of the large language model QWEN3-235B-A22B-2507, princ
 
 \section*{Data and code availability}
 
-All data and code used for running experiments, model fitting, and plotting is available on a GitHub repository at \url{https://ai4ci.github.io/ggoutbreak-paper/}. The methods described here are implemented in the form of an R package to support the estimation of epidemiological parameters and it is deployed on the A14CI r-universe (\url{https://ai4ci.r-universe.dev/ggoutbreak}). We have also used Zenodo to assign a DOI to the repository: doi:10.5281/zenodo.7691196.
+All data and code used for running experiments, model fitting, and plotting is available on a GitHub repository at \url{https://ai4ci.github.io/ggoutbreak-paper/}. The methods described here are implemented in the form of an R package to support the estimation of epidemiological parameters and it is deployed on the AI4CI r-universe (\url{https://ai4ci.r-universe.dev/ggoutbreak}). We have also used Zenodo to assign a DOI to the repository: doi:10.5281/zenodo.7691196.
 
 \section*{Supporting information}
 
