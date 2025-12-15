@@ -263,7 +263,7 @@ As an aside, it has been shown that the sum of correlated log-normal distributed
 	  \rho_{ij} \sigma_i \sigma_j e^{\mu_i+\frac{1}{2}\sigma_i^2}
 	  e^{\mu_j+\frac{1}{2}\sigma_j^2}
 	\\
-	\mu_Z &= \log S_+ - \frac{1}{2}\sigma_{Z}^2
+	\mu_Z &= \log(S_+) - \frac{1}{2}\sigma_{Z}^2
 \end{aligned}
 \label{eq:lo}
 \end{eqnarray}
@@ -273,7 +273,7 @@ We can apply this approximation \eqref{eq:lo} to the problem of estimating $R_t$
 \begin{eqnarray}
 \begin{aligned}
 	m_{\tau} &= e^{\mu_{t-\tau} + \log (\omega_{\tau}) + \frac{1}{2}\sigma_{t-\tau}^2 } \\
-	\mathbb{V}_{ij} &= \text{Cov}(\log \lambda_{t-i}, \log \lambda_{t-j}) = \rho_{(t-i)(t-j)} \sigma_{t-i} \sigma_{t-j} \\
+	\mathbb{V}_{ij} &= \text{Cov}\left(\log(\lambda_{t-i}), \log( \lambda_{t-j})\right) = \rho_{(t-i)(t-j)} \sigma_{t-i} \sigma_{t-j} \\
 	S_{+} &= \sum_{\tau=1}^k { m_{\tau} } \\
 	\sigma_{Z}^2 &=
 	  \frac{
@@ -292,7 +292,7 @@ With $\mu_{Z}$ and $\sigma_{Z}$ defined, $R_t$ is approximated as the ratio of t
 \begin{aligned}
 R_t &\sim \frac{Lognormal(\mu_t,\sigma_t)}
 {Lognormal( \mu_{Z}, \sigma_{Z})} \\
-\mu_{R_t} &= \mu_t - \mu_{Z} = \mu_t - \log S_+ + \frac{1}{2}\sigma_{Z}^2\\
+\mu_{R_t} &= \mu_t - \mu_{Z} = \mu_t - \log(S_+) + \frac{1}{2}\sigma_{Z}^2\\
 \sigma_{R_t} &= \sqrt{\sigma_t^2+\sigma_{Z}^2 - 2 \mathbb{V}_{0Z}} \\
 \mathbb{V}_{0Z} &= \frac{\sum_{\tau=1}^k m_\tau \mathbb{V}_{0\tau}}{\sum_{\tau=1}^k m_\tau} = \frac{1}{S_+}\sum_{\tau=1}^k m_\tau \mathbb{V}_{0\tau}\\
 R_t &\sim Lognormal(\mu_{R_t}, \sigma_{R_t})
@@ -309,10 +309,10 @@ In \eqref{eq:final}, $\mu_t$ is the log-scale mean of the incidence estimate at 
 
 \begin{eqnarray}
 \begin{aligned}
-\log m_\tau &= \mu_{t-\tau} + \log \omega_\tau + \frac{1}{2} \sigma_{t-\tau}^2 \\
-\log S_+ &= \text{logsumexp}_\tau(\log m_\tau) \\
-\log \sigma_Z^2 &= \text{logsumexp}_{i,j} \left( \log m_i + \log m_j + \log \mathbb{V}_{ij} \right) - 2 \log S_+ \\
-\log \mathbb{V}_{0Z} &= \text{logsumexp}_\tau \left( \log m_\tau + \log \mathbb{V}_{0\tau} \right) - \log S_+
+\log(m_\tau) &= \mu_{t-\tau} + \log(\omega_\tau) + \frac{1}{2} \sigma_{t-\tau}^2 \\
+\log(S_+) &= \text{logsumexp}_\tau(\log (m_\tau)) \\
+\log(\sigma_Z^2) &= \text{logsumexp}_{i,j} \left( \log(m_i) + \log(m_j) + \log(\mathbb{V}_{ij}) \right) - 2 \log(S_+) \\
+\log(\mathbb{V}_{0Z}) &= \text{logsumexp}_\tau \left( \log(m_\tau) + \log(\mathbb{V}_{0\tau}) \right) - \log(S_+)
 \end{aligned}
 \label{eq:logsumexp}
 \end{eqnarray}
@@ -351,9 +351,9 @@ As the cumulative density function of this mixture distribution is a strictly in
 \begin{eqnarray}
 \label{eq:final_4}
 \begin{aligned}
-\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(q_{0.025}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.025 &= 0 \\
-\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(q_{0.5}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.5 &= 0 \\
-\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{ln(q_{0.975}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.975 &= 0
+\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{\ln(q_{0.025}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.025 &= 0 \\
+\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{\ln(q_{0.5}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.5 &= 0 \\
+\frac{1}{|\Omega|}\sum_{\omega \in \Omega} \Phi\bigg(\frac{\ln(q_{0.975}) - \mu_{R_t,\omega}}{\sigma_{R_t,\omega}}\bigg) - 0.975 &= 0
 \end{aligned}
 \end{eqnarray}
 
@@ -361,8 +361,8 @@ Numerical solutions to this are moderately expensive to perform. A reasonable ap
 
 \begin{eqnarray}
 \begin{aligned}
-\mu_{t|\Omega} &= log\bigg(\frac{E[R_t^*]^2}{\sqrt{E[R_t^*]^2 + V[R_t^*]}}\bigg) \\
-\sigma_{t|\Omega} &= \sqrt{log\bigg(1 + \frac{V[R_t^*]}{E[R_t^*]^2}\bigg)}\\
+\mu_{t|\Omega} &= \log\bigg(\frac{E[R_t^*]^2}{\sqrt{E[R_t^*]^2 + V[R_t^*]}}\bigg) \\
+\sigma_{t|\Omega} &= \sqrt{\log\bigg(1 + \frac{V[R_t^*]}{E[R_t^*]^2}\bigg)}\\
 \overline{R_{t|\Omega}} &\sim Lognormal(\mu_{t|\Omega},\sigma_{t|\Omega})
 \end{aligned}
 \end{eqnarray}
@@ -383,7 +383,7 @@ For each estimator method and within the 3 groups of low, medium and high ascert
 
 We calculated the average continuous ranked probability score (CRPS) as a overall performance metric \cite{anderson1996,bosse2024,bosse2023,brocker2008,gneiting2007}. The average proportional bias of the estimates within each simulation gives us a measure of estimator bias. We calculated the mean of the 50\% interval width (inter-quartile range) of each estimate as a measure of estimator sharpness. We calculated the coverage probability of the 50\% inter quantile range as an indicator of estimator calibration. We further investigated calibration by de-biasing estimates and with these adjusted estimates derived a novel calibration metric as the Wasserstein distance \cite{panaretos2019} of the probability integral transform histogram from the uniform \cite{david1948,hamill2001,wilks2019,brockwell2007} (lower values are better). To test the ability to discriminate between a growing or shrinking epidemic we calculated the prediction probability of misclassification of the true value $R_t$ being greater than or less than 1. A weighted average of these by absolute distance of the true value from 1 gives us a estimator metric for this specific question (lower values are better). These metrics are fully defined in \nameref{S2_Appendix}.
 
-We conducted two sensitivity analyses, one with an `EpiEstim' window and `Locfit' bandwidth. or `GAM' knots equivalent to 7 days, rather than the 14 in the main analysis, and a second comparing estimate quality when the estimates were not corrected for delays.
+We conducted two sensitivity analyses, one with an `EpiEstim' window and `Locfit' bandwidth. or `GAM' knots equivalent to 7 days, rather than the 14 in the main analysis, and a second comparing estimate quality when the estimates were not corrected for delays. Further case studies and examples of the application of the method to historical data are presented in the package documentation (\url{https://ai4ci.github.io/ggoutbreak/}).
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -418,19 +418,19 @@ In the first sensitivity analysis (\nameref{S1_Appendix} Fig S5), the amount of 
 
 \section*{Discussion}
 
-In this paper we describe a mathematical method for deriving an estimate of the effective reproduction number ($R_t$) from modelled estimates of disease incidence, that incorporates uncertainty from both incidence model and infectivity profile. By adopting a two stage process it allows for a flexible approach to incidence modelling that allows us to address many issues, such as right truncation, anomalies, missing data, or temporally aggregated data, before using this to estimating $R_t$. At the same time our method propagates uncertainty from incidence models and infectivity profiles appropriately. We provide evidence that when combined with basic incidence models, our method produces $R_t$ estimates that are comparable to the de-facto standard algorithm implemented in `EpiEstim' \cite{thompson2019}, when assessed against synthetic outbreak data. 
+In this paper we describe a mathematical method for deriving an estimate of the effective reproduction number ($R_t$) from modelled estimates of disease incidence, that incorporates uncertainty from both incidence model and infectivity profile. Using a two stage process it allows for a flexible approach to incidence modelling that allows us to address many issues, such as right truncation, anomalies, missing data, or temporally aggregated data \cite{nash2023}, before using this to estimate $R_t$. At the same time our method propagates uncertainty from incidence models and infectivity profiles to $R_t$ estimates appropriately. We provide evidence that when combined with basic incidence models, our method produces $R_t$ estimates that are comparable to the de-facto standard algorithm implemented in `EpiEstim' \cite{thompson2019}, when assessed against synthetic outbreak data. 
 
 There is a similar approach to deriving $R_t$ from modelled incidence described by Gressani et al.\cite{gressani2022}. It assumes a specific formulation for the incidence model as a negative binomial distribution estimated with P-splines in a Bayesian framework with Laplace approximations. This encouragingly also gives log normally distributed estimates for $R_t$, but its methodology is predicated on the specifics of the P-spline posterior vector and it does not incorporate infectivity profile uncertainty.
 
-By comparison the approach in this paper is only loosely coupled to the incidence estimate framework and so can be applied to any incidence model that produces a time varying log-normally distributed incidence estimate. This includes a broad family of Poisson and negative binomial regression models \cite{nelder1972,loader1999,hastie2017}, or latent Gaussian models \cite{rue2009} using logarithmic link functions, and is agnostic to the formulation of those models. The incidence models can be estimated on time aggregated data \cite{nash2023}, include covariates such as day of week effects, incorporate change points without affecting the derivation of the reproduction number estimates.
+By comparison the approach in this paper is only loosely coupled to the incidence estimate framework and so can be applied to any incidence model that produces a time varying log-normally distributed incidence estimate. This includes a broad family of Poisson and negative binomial regression models \cite{nelder1972,loader1999,hastie2017}, or latent Gaussian models \cite{rue2009} using logarithmic link functions, and is agnostic to the formulation of those models. The incidence models could for example include covariates such as day of week effects, incorporate change points, or include spatial dimensions without affecting the derivation of the reproduction number estimates.
 
-In terms of infectivity profile, our method is robust to distributions with zero or negative time intervals between index and secondary observations. It could therefore be used with directly observed real world serial interval distributions \cite{park2021} and delayed case counts as proxies for infectivity profile and infection incidence, which are necessarily inferred quantities; this is explored further in the `ggoutbreak' package documentation (\url{https://ai4ci.github.io/ggoutbreak/}). Our method does not specifically address important questions arising from ascertainment bias, or right truncation of observed incidence  \cite{abbott2020,abbott2024}, however when input incidence models have been adapted to right censored data our method can be used to derive an $R_t$ estimate (see package documentation for more details).
+In terms of infectivity profile, our method is robust to distributions with zero or negative time intervals between index and secondary observations. It could therefore be used with directly observed real world serial interval distributions \cite{park2021} and delayed case counts as proxies for infectivity profile and infection incidence, which are necessarily inferred quantities; this is explored further in the `ggoutbreak' package documentation (\url{https://ai4ci.github.io/ggoutbreak/}). Our method does not specifically address important questions arising from ascertainment bias, or right truncation of observed incidence  \cite{abbott2020,abbott2024}, however when input incidence models have been adapted to right censored data our method can be used to derive an $R_t$ estimate (see package documentation for an example).
 
-The validation comparison here combines one very simple statistical model of incidence `$R_t$ Locfit', and one more sophisticated model `$R_t$ GAM', with our method to derive $R_t$ estimates, and compares them to estimates produced direct from the count data by `EpiEstim'. This shows that the combination of incidence models and our $R_t$ derivation, produces estimates similar to `EpiEstim`. We have not formally tested the statistical significance of the differences because they are based on a large number of observations, and even tiny differences will be statistically significant. We pragmatically chose to simulate using a set of 5 step functions for $R_t$ parametrisation, which we expect to be relatively challenging for both `EpiEstim' and the statistical models for incidence we used here. It is clear that relative performance between the methods varies with the exact details of the test scenario (see \nameref{S1_Appendix} Fig S6). A more realistic smooth $R_t$ parametrisation time series has been performed and both methods perform better in such scenarios, so we consider our simulations to be worst case. There are some scenarios in which `EpiEstim' performs better and others in which incidence model derived estimates perform better. In comparing the models we ignored the first 20 $R_t$ estimates which are unstable in `EpiEstim` and very uncertain in `$R_t$ Locfit', this will tend to discriminate against `$R_t$ GAM' which seems comparatively accurate in the first 20 days.
+The validation comparison here combines one very simple statistical model of incidence `$R_t$ Locfit', and one more sophisticated model `$R_t$ GAM', with our method to derive $R_t$ estimates, and compares them to estimates produced direct from the count data by `EpiEstim'. This shows that the combination of incidence models and our $R_t$ derivation, produces estimates similar to `EpiEstim`. We have not formally tested the statistical significance of the differences because they are based on a large number of observations, and even tiny differences will be statistically significant. We pragmatically chose to simulate using a set of 5 step functions for $R_t$ parametrisation, which we expect to be relatively challenging for both `EpiEstim' and the statistical models for incidence we used here. The relative performance between the methods varies with the exact details of the test scenario (see \nameref{S1_Appendix} Fig S6). A more realistic smooth $R_t$ parametrisation time series has been performed and both methods perform better in such scenarios, so we consider our simulations to be worst case. There are some scenarios in which `EpiEstim' performs better and others in which incidence model derived estimates performs better. In comparing the models we ignored the first 20 $R_t$ estimates which are unstable in `EpiEstim` and very uncertain in `$R_t$ Locfit', this will tend to discriminate against `$R_t$ GAM' which seems to be much more accurate in the first 20 days.
 
-Our method is not a replacement for `EpiEstim' as it requires an incidence model dervied from count data, rather than directly using data, and any comparison is looking at both the incidence model quality and the method for deriving $R_t$. This must be taken into account when interpreting the validation section of this paper. By picking two statistical models for incidence with different characteristics, to which to apply our method for estimating $R_t$, we hope to demonstrate that the combinations are not obviously inferior to `EpiEstim'. If we had used different incidence models, the overall $R_t$ estimate may have very different characteristics. The choice of best estimator is subjective as it depends on whether it is more important to have an estimator that minimises the risk of a misclassification between a growing or shrinking epidemic, or whether a more accurate representation of uncertainty is required. Estimates of later time points are also arguably more important in managing an epidemic.
+Our method is not a replacement for `EpiEstim' as it requires an incidence model derived from count data, rather than directly using data, and any comparison is looking at both the incidence model quality and the method for deriving $R_t$. This must be taken into account when interpreting the validation section of this paper. By picking two statistical models for incidence with different characteristics, to which to apply our method for estimating $R_t$, we hope to demonstrate that the combinations are not obviously inferior to `EpiEstim'. If we had used different incidence models, the overall $R_t$ estimate may have very different characteristics. The choice of best estimator is subjective as it depends on whether it is more important to have an estimator that minimises the risk of a misclassification between a growing or shrinking epidemic, or whether a more accurate representation of uncertainty is required. Estimates of later time points are also arguably more important in managing an epidemic.
 
-Notwithstanding these limitations in validation, we argue our method for deriving $R_t$ from log-normally modelled incidence estimates, which are commonly produced by statistical modelling frameworks, is a useful adjunct to the range of tools available for monitoring an epidemic. It is relatively quick and deterministic, and is flexible enough to be combined with a wide range of temporal incidence modelling techniques, which can account for reporting delays or ascertainment bias, or could be extended to spatio-temporal incidence models.
+Notwithstanding these limitations in validation, we argue our method for deriving $R_t$ from log-normally modelled incidence estimates, which are commonly produced by statistical modelling frameworks, is a useful adjunct to the range of tools available for monitoring an epidemic. It is relatively quick and deterministic, and is flexible enough to be combined with a wide range of temporal incidence modelling techniques, which can for example account for reporting delays, ascertainment bias, temporally aggregated data, and noisy missing data. 
 
 \nolinenumbers
 
@@ -450,7 +450,7 @@ RC and LD generated the research questions. RC performed the mathematical analys
 
 \subsection*{Use of large language models}
 
-We acknowledge the input of the large language model QWEN3-235B-A22B-2507, principally in refining the mathematical methods in this paper. All methods were conceptualised by the authors, but QWEN3 contributed to improve the handling of estimate covariance and assessment of the bias when assuming independence (\nameref{S3_Appendix}). QWEN3 was also used to improve mathematical notation and consistency. There was no use of LLMs in generating the final narrative of this paper, or in validation of the methods. The reference implementations of these methods was written without the use of LLMs, except for the code responsible for the generation of synthetic variance-covariance matrices. All mathematical and code generated by QWEN3 was rigorously reviewed and tested by the authors. Discussion history is available from the corresponding author on request.
+We acknowledge the input of the large language model QWEN3-235B-A22B-2507, principally in refining the mathematical methods in this paper. All methods were conceptualised by the authors, but QWEN3 was used to improve the handling of estimate covariance and the assessment of the bias when assuming independence (\nameref{S3_Appendix}). QWEN3 was also used to improve the formatting of the mathematical notation and identify inconsistencies. There was no use of LLMs in generating the final narrative of this paper, or in validation of the methods. The reference implementations of these methods was written without the use of LLMs, except for the code responsible for the generation of synthetic variance-covariance matrices. All mathematical and code generated by QWEN3 was rigorously reviewed and tested by the authors. Discussion history is available from the corresponding author on request.
 
 \section*{Data and code availability}
 
